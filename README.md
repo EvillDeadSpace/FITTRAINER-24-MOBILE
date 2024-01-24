@@ -7,3 +7,7 @@ As for the project itself, my goal was to create a project to make it easier for
 With that alone, my program has splits that the **USER** will be able to choose or buy. After that, he will be able to choose, that is, rent his coach, where there will be a list of all available coaches. There will be something like a map where the user will be able to see all the nearest gyms in their city and will be able to see which one is far from it.
 
 But first of all, there will be a **login** and **registration** where the user will be able to log in and register. All data will be saved in the database.
+
+
+On this link below you can see the UI design as I created it and how it will probably change over time, so if you have time, I am free for some criticism on how to improve the design:
+**https://www.figma.com/file/6ZEBd5zASKGy7GVzj17MHv/FitTreiner-24?type=design&node-id=0-1&mode=design**
