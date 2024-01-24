@@ -4,7 +4,7 @@
     "slug": "FitTreiner-24",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./photo/adminPhoto.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

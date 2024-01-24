@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import HomePage from "./components/HomePage";
+import {UserProvider} from "./components/UserContext";
+import 'react-native-gesture-handler';
+import HelloPanel from "./components/home";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Gymaps from "./components/Gymaps";
 
-export default function App() {
+
+const Stack  = createStackNavigator();
+
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <UserProvider>
+          <Layout style={{ flex: 1, justifyContent: 'center'}}>
+                <NavigationContainer>
+                    <Stack.Navigator>
+                        <Stack.Screen name="Home" component={HelloPanel} options={{ headerShown: false }}/>
+                        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                        <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
+                        <Stack.Screen name="Gymaps" component={Gymaps} options={{ headerShown: false }} />
+                        <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+                    </Stack.Navigator>
+                </NavigationContainer>
+          </Layout>
+      </UserProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () => (
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <App />
+    </ApplicationProvider>
+);
