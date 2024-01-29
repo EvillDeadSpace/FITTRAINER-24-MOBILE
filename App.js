@@ -9,9 +9,8 @@ import HelloPanel from "./components/home";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Gymaps from "./components/Gymaps";
-
+import ExercisePanel from "./components/ExercisePanel";
 const Stack  = createStackNavigator();
-
 
 const App = () => {
   return (
@@ -23,6 +22,7 @@ const App = () => {
                         <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
                         <Stack.Screen name="Gymaps" component={Gymaps} options={{ headerShown: false }} />
                         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+                        <Stack.Screen name="ExercisePanel" component={ExercisePanel} options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
           </Layout>

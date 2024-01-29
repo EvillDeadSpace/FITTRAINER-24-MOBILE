@@ -4,35 +4,35 @@ import * as images from './photo';
 const exercises = [
     {
         photo: images.photoSholder,
-        name: "Sholders",
+        name: "shoulders",
     },
     {
         photo: images.photoSixPack,
-        name: "Six Pack",
+        name: "abs",
     },
     {
       photo: images.photoLegs,
-      name: "Legs",
+      name: "quads",
     },
     {
         photo: images.photoChest,
-        name: "Chest",
+        name: "chest",
     },
     {
         photo: images.photoTricpes,
-        name: "Triceps",
+        name: "triceps",
     },
     {
         photo: images.photoBack,
-        name: "Back",
+        name: "back",
     },
     {
         photo: images.photoBiceps,
-        name: "Biceps",
+        name: "biceps",
     },
     {
         photo: images.photoGluteus,
-        name: "Gluteus",
+        name: "glutes",
     }
 ];
 

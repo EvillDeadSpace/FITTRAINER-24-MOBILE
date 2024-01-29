@@ -130,7 +130,7 @@ const BottomTabNavigator = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
-                            <Icon name="user" size={24} color={focused ? '#16247d' : 'gray'} />
+                            <Icon name="map" size={24} color={focused ? '#16247d' : 'gray'} />
                         </View>
                     ),
                 }}

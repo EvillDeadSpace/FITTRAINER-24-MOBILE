@@ -3,10 +3,14 @@ import {View, Text, StyleSheet, TextInput, ScrollView,} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CardScroll from './CardScroll';
 import BottomTabNavigator from './Navigation';
-import MapCard from "./MapCard";
+
+import {Button} from "@ui-kitten/components";
+
 const HomePage = ({ route }) => {
     const { username } = route.params;
-    const [searchText, setSearchText] = useState('');
+
+
+
 
 
     return (
@@ -15,20 +19,12 @@ const HomePage = ({ route }) => {
                 <Text style={{ fontSize: 20, marginBottom: 10 }}>Hello,</Text>
                 <Text style={{ fontSize: 20, marginTop:-10  }}>{username}</Text>
             </View>
-            <View style={styles.container}>
-                <Icon name="search" size={20} color="gray" style={styles.searchIcon} />
-                <TextInput
-                    placeholder="Search the exercise"
-                    style={styles.input}
-                    value={searchText}
-                    onChangeText={(text) => setSearchText(text)}
-                />
-            </View>
+
             <ScrollView>
                 <CardScroll />
             </ScrollView>
             <BottomTabNavigator />
-
+            <Button>Search</Button>
         </>
     );
 };
