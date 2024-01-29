@@ -1,9 +1,14 @@
 // MapScreen.js
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import axios from 'axios';
+
+
+import MapCard from "./MapCard";
+
+
 
 const MapScreen = () => {
     const [region, setRegion] = useState({
@@ -68,22 +73,19 @@ const MapScreen = () => {
 
         getUserLocation();
 
-        // ... (ostatak koda)
     }, []);
 
 
 
 
-    // ... (ostatak koda)
-
     return (
         <View style={styles.container}>
+
             <MapView
                 style={styles.map}
                 region={region}
                 onRegionChangeComplete={newRegion => setRegion(newRegion)}
             >
-                {/* Prikaz markera za teretane */}
                 {gyms.map(gym => (
                     <Marker
                         key={gym.id}
@@ -96,6 +98,7 @@ const MapScreen = () => {
                     />
                 ))}
             </MapView>
+            <MapCard  />
         </View>
     );
 };

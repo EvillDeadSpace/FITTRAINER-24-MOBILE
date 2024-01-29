@@ -4,20 +4,17 @@ import * as eva from '@eva-design/eva';
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
-import {UserProvider} from "./components/UserContext";
 import 'react-native-gesture-handler';
 import HelloPanel from "./components/home";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Gymaps from "./components/Gymaps";
 
-
 const Stack  = createStackNavigator();
 
 
 const App = () => {
   return (
-      <UserProvider>
           <Layout style={{ flex: 1, justifyContent: 'center'}}>
                 <NavigationContainer>
                     <Stack.Navigator>
@@ -29,7 +26,6 @@ const App = () => {
                     </Stack.Navigator>
                 </NavigationContainer>
           </Layout>
-      </UserProvider>
   );
 };
 

@@ -15,6 +15,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
 
+
     const handleSignUpPress = () => {
         navigation.navigate('Signup');
     };
@@ -35,6 +36,12 @@ const Login = () => {
             const username = result.user.username;
 
             if (result.success) {
+
+                const user =result.user.username;
+
+                const receivedUser=user && user.username ? user.username : "NEMA";
+
+
                 console.log(username);
                 navigation.navigate('HomePage', { username });
                 console.log('Uspesna prijava:', result.message);

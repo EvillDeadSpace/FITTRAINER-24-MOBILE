@@ -79,7 +79,7 @@ app.post('/api/login', async (req, res) => {
 
         if (existingUser) {
             console.log('Uspesna prijava:', existingUser);
-            res.json({ success: true, message: 'Uspesna prijava.', user: existingUser });
+            res.json({ success: true, message: 'Uspesna prijava.', user: { username: existingUser.username } });
         } else {
             console.error('Neuspesna prijava: Korisnik ne postoji ili lozinka nije ispravna.');
             res.status(401).json({ success: false, message: 'Korisnik ne postoji ili lozinka nije ispravna.' });

@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TextInput, ScrollView,} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CardScroll from './CardScroll';
 import BottomTabNavigator from './Navigation';
-
+import MapCard from "./MapCard";
 const HomePage = ({ route }) => {
     const { username } = route.params;
     const [searchText, setSearchText] = useState('');
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 16,
         margin: 18,
+        marginTop:25,
     },
     searchIcon: {
         marginRight: 15,

@@ -35,14 +35,15 @@ const styles = StyleSheet.create({
         elevation: 4,
         shadowOffset: { width: 5, height: 5 },
         shadowColor: "#333",
+
     },
     container:{
         flex: 1,
         flexDirection: 'row',
         padding: 8,
         marginTop:-8,
-        marginRight:20,
-        marginLeft:5,
+        marginRight:15,
+        marginLeft:15,
     },
     imageContainer: {
         marginTop:5,

@@ -1,14 +1,14 @@
 import {Button, Layout, Text} from "@ui-kitten/components";
 import {Image, View} from "react-native";
 import React from "react";
-import adminPhoto from "../photo/adminPhoto.png"
+import * as images from '.././costans/photo';
 import { useNavigation } from '@react-navigation/native';
 const HelloPanel = () => {
     const navigation = useNavigation();
 
     return(
         <Layout style={{  marginTop:150,justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3', }}>
-            <Image source={adminPhoto}
+            <Image style={{rounded:100}} source={images.homePagePhoto}
             style={{width:265, height:265, borderRadius: 20,}}/>
         <View style={{ marginTop: 15 }}>
             <Text category="h1" style={{ fontSize: 24, marginTop: 5 }}>
