@@ -22,8 +22,10 @@ const Login = () => {
 
 
     const handleLogin = async () => {
+
+        const url = "https://fit-treiner-24-evilldeadspace.vercel.app/api/login";
         try {
-            const response = await fetch('http://192.168.0.103:3000/api/login', {
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
