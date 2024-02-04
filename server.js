@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const jwt = require('jsonwebtoken');
+
 // Definisanje šeme za korisnika
 const userSchema = new Schema({
     username: String,
@@ -28,6 +30,29 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send('Dobrodošli na server!');
 });
+
+
+app.get('/api/username', verifyToken, async (req, res) => {
+    try {
+        // Izvlačenje username-a iz req.user
+        const { username } = req.user;
+
+        // Pretraga korisnika u bazi podataka koristeći username
+        const user = await User.findOne({ username });
+
+        // Provera da li korisnik postoji
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
+        }
+
+        // Slanje username-a korisnika kao odgovora
+        res.json({ username: user.username });
+    } catch (error) {
+        console.error('Došlo je do greške prilikom preuzimanja korisnika:', error);
+        res.status(500).json({ success: false, message: 'Došlo je do greške prilikom preuzimanja korisnika.' });
+    }
+});
+
 
 app.get('/api/signup', (req, res) => {
     res.send('Dobrodošli na signup stranicu!');
@@ -54,6 +79,13 @@ app.post('/api/signup', async (req, res) => {
         const newUser = new User({ email,username, password });
         await newUser.save();
 
+        // Generisanje JWT tokena
+        const secretKey = 'tajna'; // Promijenite s dinamičkim tajnim ključem kasnije
+        const token = jwt.sign({ email, password }, secretKey, { expiresIn: '1h' });
+
+        // Ispisivanje tokena u konzoli
+        console.log('Generisan JWT token:', token);
+
         res.json({ success: true, message: 'Uspešna registracija.' });
     } catch (error) {
         console.error('Došlo je do greške prilikom registracije:', error);
@@ -77,9 +109,12 @@ app.post('/api/login', async (req, res) => {
             const existingUser = await User.findOne({ email, password }).lean();
             console.log(User);
 
+             const secretKey = 'tajna'; // Promijenite s dinamičkim tajnim ključem kasnije
+             const token = jwt.sign({ email, password }, secretKey, { expiresIn: '1h' });
+
         if (existingUser) {
             console.log('Uspesna prijava:', existingUser);
-            res.json({ success: true, message: 'Uspesna prijava.', user: { username: existingUser.username } });
+            res.json({ success: true, message: 'Uspesna prijava.', user: { username: existingUser.username }, token: token,});
         } else {
             console.error('Neuspesna prijava: Korisnik ne postoji ili lozinka nije ispravna.');
             res.status(401).json({ success: false, message: 'Korisnik ne postoji ili lozinka nije ispravna.' });
@@ -89,7 +124,23 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ success: false, message: 'Došlo je do greške prilikom prijave.' });
     }
 });
+function verifyToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) {
+        return res.sendStatus(401); // Ako nema tokena, vrati grešku
+    }
+
+    jwt.verify(token, 'tajna', (err, user) => {
+        if (err) {
+            return res.sendStatus(403); // Ako je token nevažeći, vrati grešku
+        }
+
+        req.user = user;
+        next(); // Ako je token važeći, nastavi sa obradom zahteva
+    });
+}
 
 
-export default app;
 

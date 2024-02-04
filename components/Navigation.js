@@ -1,5 +1,5 @@
 //BottomTabNavigator.js
-import React from 'react';
+import React,{useState} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,7 +8,7 @@ import HomePage from "./HomePage";
 import Login from "./Login";
 import TestHomePAge from "./TestHomePAge";
 import Gymaps from "./Gymaps";
-
+import Meni from "../costans/Meni";
 const Tab = createBottomTabNavigator();
 
 
@@ -28,6 +28,18 @@ const screenOptions = {
 
 const BottomTabNavigator = () => {
     const navigation = useNavigation();
+    const [isMenuOpen, setMenuOpen] = useState(false);
+
+    const handleMenu = () => {
+        setMenuOpen(!isMenuOpen);
+    };
+    const handleMenuItemPress = (menuItem) => {
+        // Dodajte logiku za rukovanje odabirom stavke izbornika
+        console.log(`Odabrana stavka izbornika: ${menuItem}`);
+        setMenuOpen(false); // Zatvori meni nakon odabira stavke
+    };
+
+
 
     return (
         <Tab.Navigator screenOptions={screenOptions} >
@@ -95,7 +107,7 @@ const BottomTabNavigator = () => {
             />
             <Tab.Screen
                 name="Heart"
-                component={() => { /* Dodaj komponentu za Signup ekran */ }}
+                component={() => { /* Dodaj komponentu za Favorite ekran */ }}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{

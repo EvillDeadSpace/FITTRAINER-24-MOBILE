@@ -10,11 +10,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Gymaps from "./components/Gymaps";
 import ExercisePanel from "./components/ExercisePanel";
+import Orders from "./menuComponents/Orders";
+import Meni from "./costans/Meni";
+import Addresses from "./menuComponents/Addresses";
+import Settings from "./menuComponents/Settings";
+import { UserProvider } from './components/UserProvider';
+
 const Stack  = createStackNavigator();
 
 const App = () => {
   return (
           <Layout style={{ flex: 1, justifyContent: 'center'}}>
+              <UserProvider>
                 <NavigationContainer>
                     <Stack.Navigator>
                         <Stack.Screen name="Home" component={HelloPanel} options={{ headerShown: false }}/>
@@ -23,8 +30,13 @@ const App = () => {
                         <Stack.Screen name="Gymaps" component={Gymaps} options={{ headerShown: false }} />
                         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
                         <Stack.Screen name="ExercisePanel" component={ExercisePanel} options={{ headerShown: false }}/>
+                        <Stack.Screen name="Orders" component={Orders} options={{ headerShown: false }}/>
+                        <Stack.Screen name="Meni" component={Meni} options={{ headerShown: false }}/>
+                        <Stack.Screen name="Addresses" component={Addresses} options={{ headerShown: false }}/>
+                        <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
+              </UserProvider>
           </Layout>
   );
 };

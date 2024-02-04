@@ -9,13 +9,13 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import * as images from '.././costans/photo';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { UserContext } from './Contex';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
 
-
+    const { setUsername } = useContext(UserContext);
     const handleSignUpPress = () => {
         navigation.navigate('Signup');
     };
@@ -23,7 +23,7 @@ const Login = () => {
 
     const handleLogin = async () => {
 
-        const url = "https://fit-treiner-24-evilldeadspace.vercel.app/api/login";
+        const url = "http://192.168.0.102:3000/api/login";
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -38,7 +38,7 @@ const Login = () => {
             const username = result.user.username;
 
             if (result.success) {
-
+                setUsername(result.user.username);
                 const user =result.user.username;
 
                 const receivedUser=user && user.username ? user.username : "NEMA";

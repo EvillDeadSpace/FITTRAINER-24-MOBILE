@@ -11,7 +11,7 @@ const HelloPanel = () => {
             <Image style={{rounded:100}} source={images.homePagePhoto}
             style={{width:265, height:265, borderRadius: 20,}}/>
         <View style={{ marginTop: 15 }}>
-            <Text category="h1" style={{ fontSize: 24, marginTop: 5 }}>
+            <Text category="h1" style={{ fontSize: 24, marginTop: 5, }}>
                 Welcome to FitTreiner-24
             </Text>
             <Text
@@ -20,6 +20,7 @@ const HelloPanel = () => {
                     fontSize: 16,
                     marginTop: 8,
                     textAlign: 'center',
+
                 }}
             >
                 Everything you need in one place
