@@ -11,7 +11,6 @@ export default function CardScroll() {
 
     const handleExercisePress = async (exerciseName) => {
         try {
-
             if (exerciseName === 'biceps' || exerciseName === 'triceps' || exerciseName === 'quads' || exerciseName === 'abs' || exerciseName === 'glutes') {
                 console.log('Tražim vježbu:', exerciseName);
                 // Fetch podataka s API-ja prema imenu vježbe
@@ -25,7 +24,6 @@ export default function CardScroll() {
                         gifUrl: exercise.gifUrl,
                         equipment: exercise.equipment,
                     }));
-
                     // Prikazivanje informacija na ekranu ExercisePanel
                     navigation.navigate('ExercisePanel', { allExercises });
                 } else {
@@ -126,7 +124,6 @@ const styles = StyleSheet.create({
         elevation: 4,
         shadowOffset: { width: 5, height: 5 },
         shadowColor: "#333",
-
     },
     container:{
         flex: 1,

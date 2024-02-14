@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import CardScroll from './CardScroll';
 import BottomTabNavigator from './Navigation';
-
+import { useContext } from 'react';
 import {Button} from "@ui-kitten/components";
 import Meni from '../costans/Meni';
+import { UserContext } from './Contex';
+import ExercisesWeek from "../costans/ExercisesWeek";
 
 
-
-const HomePage = ({ route }) => {
-    const { username } = route.params;
-
+const HomePage = () => {
+    const { username, userImage } = useContext(UserContext);
     const [isMenuOpen, setMenuOpen] = useState(false);
 
+
+    console.log(userImage);
     const handleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
@@ -23,8 +25,6 @@ const HomePage = ({ route }) => {
         setMenuOpen(false); // Zatvori meni nakon odabira stavke
     };
 
-
-
     return (
         <>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 20, marginTop: 55, alignItems: 'center' }}>
@@ -33,17 +33,22 @@ const HomePage = ({ route }) => {
                     <Text style={{ marginLeft:20,fontSize: 20, marginTop: -10 }}>{username}</Text>
                 </View>
                 <TouchableOpacity onPress={()=> handleMenu()}>
-                    <Icon
-                        name="meho"
-                        size={24}
-                    />
+                    <Image source={{ uri: userImage }} style={{ width: 50, height: 50, borderRadius: 50, marginRight: 20 }} />
                 </TouchableOpacity>
             </View>
             <Meni isOpen={isMenuOpen} onClose={() => setMenuOpen(false)} onMenuItemPress={handleMenuItemPress} />
             <ScrollView>
                 <CardScroll />
             </ScrollView>
-            <BottomTabNavigator />
+
+            <View style={{marginBottom:300}}>
+
+                <ScrollView>
+                  <ExercisesWeek/>
+                </ScrollView>
+            </View>
+
+
         </>
     );
 };

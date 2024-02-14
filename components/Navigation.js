@@ -9,6 +9,9 @@ import Login from "./Login";
 import TestHomePAge from "./TestHomePAge";
 import Gymaps from "./Gymaps";
 import Meni from "../costans/Meni";
+import LandingPage from "./LandingPage";
+import ListExercise from "./ListExercise";
+
 const Tab = createBottomTabNavigator();
 
 
@@ -42,16 +45,10 @@ const BottomTabNavigator = () => {
 
 
     return (
-        <Tab.Navigator screenOptions={screenOptions} >
+        <Tab.Navigator  initialRouteName="HomePage" screenOptions={screenOptions} >
             <Tab.Screen
                 name="HomePage"
-                component={TestHomePAge}
-                listeners={({ route }) => ({
-                    tabPress: (e) => {
-                        e.preventDefault(); // Ovo spriječava prelazak na drugi ekran kada je pritisnut tab
-                        navigation.navigate('Login');
-                    },
-                })}
+                component={HomePage}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{
@@ -70,7 +67,7 @@ const BottomTabNavigator = () => {
             />
             <Tab.Screen
                 name="Search"
-                component={ () => { /* Dodaj komponentu za Signup ekran */ }}
+                component={TestHomePAge}
 
                 options={{
                     tabBarIcon: ({ focused }) => (
@@ -89,7 +86,7 @@ const BottomTabNavigator = () => {
             />
             <Tab.Screen
                 name="Shop"
-                component={Login}
+                component={() => {ListExercise}}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{
@@ -107,7 +104,7 @@ const BottomTabNavigator = () => {
             />
             <Tab.Screen
                 name="Heart"
-                component={() => { /* Dodaj komponentu za Favorite ekran */ }}
+                component={() => {HomePage}}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{

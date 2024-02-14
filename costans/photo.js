@@ -12,6 +12,7 @@ import photoBack from '../photo/photoBack.png';
 import photoBiceps from '../photo/photoBiceps.png';
 import photoGluteus from '../photo/photoGluteus.png';
 import homePagePhoto from '../photo/homePagePhoto.jpg';
+import planPhoto from '../photo/planPhoto.png';
 
 export {
     photoSholder,
@@ -24,6 +25,7 @@ export {
     photoGluteus,
     admin,
     logoPhoto,
-    homePagePhoto
+    homePagePhoto,
+    planPhoto
 };
 

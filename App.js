@@ -15,6 +15,8 @@ import Meni from "./costans/Meni";
 import Addresses from "./menuComponents/Addresses";
 import Settings from "./menuComponents/Settings";
 import { UserProvider } from './components/UserProvider';
+import BottomTabNavigator from "./components/Navigation";
+import ViewProfile from "./menuComponents/ViewProfile";
 
 const Stack  = createStackNavigator();
 
@@ -34,9 +36,13 @@ const App = () => {
                         <Stack.Screen name="Meni" component={Meni} options={{ headerShown: false }}/>
                         <Stack.Screen name="Addresses" component={Addresses} options={{ headerShown: false }}/>
                         <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
+                        <Stack.Screen name="ListExercise" component={ExercisePanel} options={{ headerShown: false }}/>
+                        <Stack.Screen name="ViewProfile" component={ViewProfile} options={{ headerShown: false }}/>
+                        <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
               </UserProvider>
+
           </Layout>
   );
 };

@@ -3,9 +3,9 @@ import { UserContext } from './Contex';
 
 export const UserProvider = ({ children }) => {
     const [username, setUsername] = useState(null);
-
+    const [userImage, setUserImage] = useState(null);
     return (
-        <UserContext.Provider value={{ username, setUsername }}>
+        <UserContext.Provider value={{ username, setUsername, userImage, setUserImage }}>
             {children}
         </UserContext.Provider>
     );

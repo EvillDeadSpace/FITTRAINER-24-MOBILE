@@ -1,4 +1,4 @@
-import React,{ useContext } from 'react';
+import React,{ useContext, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
@@ -6,7 +6,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Gymaps from "../components/Gymaps";
-
+import Base64 from "react-native-base64";
 
 
 import { UserContext } from '../components/Contex';
@@ -14,9 +14,39 @@ import { UserContext } from '../components/Contex';
 
 const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
 
-    const { username } = useContext(UserContext);
+    const [userData, setUserData] = useState(null);
+
+    const { username, userImage, setUserImage } = useContext(UserContext);
 
     const navigator = useNavigation();
+
+
+
+    useEffect(() => {
+        fetch(`http://192.168.0.102:3000/api/user/${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setUserData(data);
+                const userImage = data.image;
+                const finalImage = Base64.decode(userImage);
+                console.log(finalImage);
+                setUserData(finalImage);
+                setUserImage(finalImage);
+
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }, []);
+
+
+
+
     const handleMenuItemPress = (route) => {
         navigator.navigate(route);
         onMenuItemPress(route);
@@ -36,15 +66,15 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
 
                     {/* Gornji dio sa slikom avatara i imenom */}
                     <View style={styles.avatarContainer}>
-                        <Icon
-                            name="user"
+                        <Image
+                            source={{ uri: userData }}
                             style={styles.avatar}
                         />
                         <Text style={styles.avatarName}>{username}</Text>
                     </View>
 
                     {/* Random 5 stavki ispod */}
-                    <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('Orders')}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => handleMenuItemPress('ViewProfile')}>
                         <View style={styles.menuItemContent}>
                             <Icon name="user" size={20} style={styles.icon} />
                             <Text style={styles.text}>View profile</Text>
@@ -141,9 +171,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     avatar: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
         marginBottom: 10,
     },
     avatarName: {

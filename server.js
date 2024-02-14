@@ -12,6 +12,7 @@ const userSchema = new Schema({
     username: String,
     email: String,
     password: String,
+    image: String,
 });
 
 // Kreiranje modela korisnika
@@ -31,28 +32,22 @@ app.get('/', (req, res) => {
     res.send('Dobrodošli na server!');
 });
 
-
-app.get('/api/username', verifyToken, async (req, res) => {
+app.get('/api/user/:username', async (req, res) => {
     try {
-        // Izvlačenje username-a iz req.user
-        const { username } = req.user;
+        const { username } = req.params;
 
-        // Pretraga korisnika u bazi podataka koristeći username
         const user = await User.findOne({ username });
 
-        // Provera da li korisnik postoji
         if (!user) {
             return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
         }
 
-        // Slanje username-a korisnika kao odgovora
-        res.json({ username: user.username });
+        res.json(user);
     } catch (error) {
         console.error('Došlo je do greške prilikom preuzimanja korisnika:', error);
         res.status(500).json({ success: false, message: 'Došlo je do greške prilikom preuzimanja korisnika.' });
     }
 });
-
 
 app.get('/api/signup', (req, res) => {
     res.send('Dobrodošli na signup stranicu!');
@@ -61,7 +56,7 @@ app.get('/api/signup', (req, res) => {
 app.post('/api/signup', async (req, res) => {
     console.log('Pristigao zahtev za signup:', req.body);
     try {
-        const { email, username ,password, repeatPassword } = req.body;
+        const { email, username ,password, repeatPassword, image  } = req.body;
 
         // Provera da li su lozinke iste
         if (password !== repeatPassword) {
@@ -76,7 +71,7 @@ app.post('/api/signup', async (req, res) => {
         }
 
         // Kreiranje novog korisnika u bazi podataka
-        const newUser = new User({ email,username, password });
+        const newUser = new User({ email,username, password, image });
         await newUser.save();
 
         // Generisanje JWT tokena
@@ -88,7 +83,7 @@ app.post('/api/signup', async (req, res) => {
 
         res.json({ success: true, message: 'Uspešna registracija.' });
     } catch (error) {
-        console.error('Došlo je do greške prilikom registracije:', error);
+        console.error('Došlo je do greške prilikom registracije baza:', error);
         res.status(500).json({ success: false, message: 'Došlo je do greške prilikom registracije.' });
     }
 });

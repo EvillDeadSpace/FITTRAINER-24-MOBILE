@@ -2,9 +2,7 @@ import React from 'react';
 import { Text, View, Image, FlatList, StyleSheet } from 'react-native';
 
 const ExercisePanel = ({ route }) => {
-
     const { allExercises } = route.params;
-
     const renderExerciseItem = ({ item }) => (
         <View style={styles.container}>
             <Text style={styles.title}>{item.name}</Text>

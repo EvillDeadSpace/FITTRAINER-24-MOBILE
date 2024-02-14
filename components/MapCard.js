@@ -9,7 +9,7 @@ const MapCard = () => {
 
 
     const { username } = useContext(UserContext);
-
+    const { picture } = useContext(UserContext);
 
     return (
         <View style={styles.container}>
@@ -27,7 +27,7 @@ const MapCard = () => {
                     </View>
                     <View style={styles.donjiViewDonjidio}>
                         <Text >{username}</Text>
-
+                        <Text>{picture}</Text>
                     </View>
                 </View>
             </View>
