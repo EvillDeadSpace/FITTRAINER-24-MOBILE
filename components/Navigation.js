@@ -11,6 +11,8 @@ import Gymaps from "./Gymaps";
 import Meni from "../costans/Meni";
 import LandingPage from "./LandingPage";
 import ListExercise from "./ListExercise";
+import Favorite from "./Favorite";
+import Orders from '../menuComponents/Orders';
 
 const Tab = createBottomTabNavigator();
 
@@ -86,7 +88,7 @@ const BottomTabNavigator = () => {
             />
             <Tab.Screen
                 name="Shop"
-                component={() => {ListExercise}}
+                component={Orders}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{
@@ -104,7 +106,7 @@ const BottomTabNavigator = () => {
             />
             <Tab.Screen
                 name="Heart"
-                component={() => {HomePage}}
+                component={Favorite}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{

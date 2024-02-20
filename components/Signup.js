@@ -40,7 +40,7 @@ const Signup = () => {
         try {
 
             const img_str=base64.encode(image);
-            const response = await fetch('http://192.168.0.102:3000/api/signup', {
+            const response = await fetch('http://192.168.0.103:3000/api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -91,7 +91,6 @@ const Signup = () => {
                     marginLeft:20,
                     marginRight:20,
                     borderRadius: 40,
-                    placeholderTextColor: 'lightgray',
                     fontSize: 14,
                     paddingHorizontal: 30, }}
             />
@@ -107,7 +106,6 @@ const Signup = () => {
                     marginLeft:20,
                     marginRight:20,
                     borderRadius: 40,
-                    placeholderTextColor: 'lightgray',
                     fontSize: 14,
                     paddingHorizontal: 30, }}
             />
@@ -123,7 +121,6 @@ const Signup = () => {
                     marginLeft:20,
                     marginRight:20,
                     borderRadius: 40,
-                    placeholderTextColor: 'lightgray',
                     fontSize: 14,
                     paddingHorizontal: 30, }}
             />
@@ -140,7 +137,6 @@ const Signup = () => {
                     marginLeft:20,
                     marginRight:20,
                     borderRadius: 40,
-                    placeholderTextColor: 'lightgray',
                     fontSize: 14,
                     paddingHorizontal: 30,  }}
             />

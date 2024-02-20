@@ -5,6 +5,8 @@ import exercises from "../costans/Exercises";
 import {fetchData, exerciseOptions} from "../costans/GetData";
 import { useNavigation } from '@react-navigation/native';
 import Icon from "react-native-vector-icons/FontAwesome";
+
+
 export default function CardScroll() {
     const [searchText, setSearchText] = useState('');
     const navigation = useNavigation();
@@ -141,7 +143,6 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 40,
-        borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 2,
     },

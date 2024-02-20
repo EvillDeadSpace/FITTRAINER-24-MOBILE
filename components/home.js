@@ -8,8 +8,7 @@ const HelloPanel = () => {
 
     return(
         <Layout style={{  marginTop:150,justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3', }}>
-            <Image style={{rounded:100}} source={images.homePagePhoto}
-            style={{width:265, height:265, borderRadius: 20,}}/>
+            <Image style={{width:265, height:265, borderRadius: 20,}} source={images.homePagePhoto}/>
         <View style={{ marginTop: 15 }}>
             <Text category="h1" style={{ fontSize: 24, marginTop: 5, }}>
                 Welcome to FitTreiner-24
@@ -17,10 +16,10 @@ const HelloPanel = () => {
             <Text
                 category="s1"
                 style={{
+
                     fontSize: 16,
                     marginTop: 8,
                     textAlign: 'center',
-
                 }}
             >
                 Everything you need in one place

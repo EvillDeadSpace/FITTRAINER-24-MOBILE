@@ -1,25 +1,56 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, ScrollView, TouchableOpacity, Image, StyleSheet} from "react-native";
 import split from "../costans/Split";
-
+import Icon from 'react-native-vector-icons/AntDesign';
+import Arrow from 'react-native-vector-icons/Entypo';
+import ExercisesList from './ExercisesList';
+import { useNavigation } from '@react-navigation/native';
 const ExercisesWeek = () => {
+
+
+    const navigation = useNavigation();
+
+    const handleToExercisesList = () => {
+        navigation.navigate('ExercisesList');
+    };
+
+
+
+
+    const [heartVisibleMap, setHeartVisibleMap] = useState({}); // Stanje za praćenje vidljivosti srca
+
+    // Funkcija koja mijenja stanje srca za određenu karticu
+    const toggleHeart = (index) => {
+        setHeartVisibleMap(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }));
+    };
+
     return (
         <>
-            <Text style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                marginLeft: 20,
-                marginBottom: 10,
-            }}>Exercises this week</Text>
+             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginRight:20 }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercises this week</Text>
+                    <TouchableOpacity style={{ backgroundColor: '#EAEAEA', padding: 5, borderRadius: 20 }} onPress={handleToExercisesList}>
+                        <Arrow name="chevron-right" size={20} color="black" />
+                    </TouchableOpacity>
+                </View>
             <ScrollView horizontal={true} style={styles.container}>
                 {split.map((item, index) => (
                     <TouchableOpacity key={index} onPress={() => console.log("prijava")}>
                         <View style={styles.card}>
                             <Image source={item.photo} style={styles.image} />
+                            <TouchableOpacity style={styles.heartIcon} onPress={() => toggleHeart(index)}>
+                                {/* Prikazuje srce ili srce u punom obliku na osnovu stanja */}
+                                {heartVisibleMap[index] ? (
+                                    <Icon name="heart" size={24} color="red" />
+                                ) : (
+                                    <Icon name="hearto" size={24} color="red" />
+                                )}
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.textContainer}>
                             <View>
-
                                 <Text style={styles.title}>{item.name}</Text>
                                 <Text style={styles.price}>{item.price}</Text>
                             </View>
@@ -30,6 +61,7 @@ const ExercisesWeek = () => {
         </>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -46,6 +78,12 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         overflow: 'hidden', // Ensures the image doesn't overflow the card
+        position: 'relative',
+    },
+    heartIcon: {
+        position: 'absolute',
+        top: 5,
+        right: 5,
     },
     image: {
         width: '100%',
@@ -53,7 +91,6 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     textContainer: {
-
         marginTop: 10, // Added margin to create space between image and text
     },
     title: {

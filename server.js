@@ -66,6 +66,12 @@ app.post('/api/signup', async (req, res) => {
         // Provera da li korisnik već postoji u bazi podataka
         const existingUser = await User.findOne({ email });
 
+        const exisingUsername = await User.findOne({username});
+
+        if (exisingUsername){
+            return res.status(400).json({ success: false, message: 'Korisnik sa ovim usernamom već postoji.' });
+        }
+
         if (existingUser) {
             return res.status(400).json({ success: false, message: 'Korisnik sa ovim emailom već postoji.' });
         }

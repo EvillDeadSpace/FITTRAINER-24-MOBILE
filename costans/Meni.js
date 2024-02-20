@@ -23,7 +23,7 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
 
 
     useEffect(() => {
-        fetch(`http://192.168.0.102:3000/api/user/${username}`)
+        fetch(`http://192.168.0.103:3000/api/user/${username}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -43,8 +43,6 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
                 console.error('There was a problem with the fetch operation:', error);
             });
     }, []);
-
-
 
 
     const handleMenuItemPress = (route) => {

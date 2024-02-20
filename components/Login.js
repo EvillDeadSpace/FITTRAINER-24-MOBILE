@@ -25,7 +25,7 @@ const Login = () => {
 
     const handleLogin = async () => {
 
-        const url = "http://192.168.0.102:3000/api/login";
+        const url = "http://192.168.0.103:3000/api/login";
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -89,7 +89,6 @@ const Login = () => {
                     marginLeft:20,
                     marginRight:20,
                     borderRadius: 40,
-                    placeholderTextColor: 'lightgray',
                     fontSize: 14,
                     paddingHorizontal: 30,
                 }}
@@ -108,7 +107,6 @@ const Login = () => {
                     marginLeft:20,
                     marginRight:20,
                     borderRadius: 40,
-                    placeholderTextColor: 'lightgray',
                     fontSize: 14,
                     paddingHorizontal: 30, }}
             />

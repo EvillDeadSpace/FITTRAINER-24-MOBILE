@@ -17,6 +17,10 @@ import Settings from "./menuComponents/Settings";
 import { UserProvider } from './components/UserProvider';
 import BottomTabNavigator from "./components/Navigation";
 import ViewProfile from "./menuComponents/ViewProfile";
+import Favorite from "./components/Favorite";
+import ExercisesList from './costans/ExercisesList';
+import CoachList from './costans/CoachList';
+
 
 const Stack  = createStackNavigator();
 
@@ -39,6 +43,9 @@ const App = () => {
                         <Stack.Screen name="ListExercise" component={ExercisePanel} options={{ headerShown: false }}/>
                         <Stack.Screen name="ViewProfile" component={ViewProfile} options={{ headerShown: false }}/>
                         <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{ headerShown: false }}/>
+                        <Stack.Screen name="Favorite" component={Favorite} options={{ headerShown: false }}/>
+                        <Stack.Screen name='ExercisesList' component={ExercisesList} options={{ headerShown: false }}/>
+                        <Stack.Screen name='CoachList' component={CoachList} options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
               </UserProvider>
