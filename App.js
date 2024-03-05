@@ -20,13 +20,13 @@ import ViewProfile from "./menuComponents/ViewProfile";
 import Favorite from "./components/Favorite";
 import ExercisesList from './costans/ExercisesList';
 import CoachList from './costans/CoachList';
-
+import ExerciseForward from './costans/ExercisesForward';
 
 const Stack  = createStackNavigator();
 
 const App = () => {
   return (
-          <Layout style={{ flex: 1, justifyContent: 'center'}}>
+          <Layout style={{ flex: 1, justifyContent: 'center', backgroundColor:"lightblue"}}>
               <UserProvider>
                 <NavigationContainer>
                     <Stack.Navigator>
@@ -46,6 +46,7 @@ const App = () => {
                         <Stack.Screen name="Favorite" component={Favorite} options={{ headerShown: false }}/>
                         <Stack.Screen name='ExercisesList' component={ExercisesList} options={{ headerShown: false }}/>
                         <Stack.Screen name='CoachList' component={CoachList} options={{ headerShown: false }}/>
+                        <Stack.Screen name='ExerciseForward' component={ExerciseForward} options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
               </UserProvider>

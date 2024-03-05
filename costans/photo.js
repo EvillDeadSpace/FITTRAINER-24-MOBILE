@@ -13,6 +13,9 @@ import photoBiceps from '../photo/photoBiceps.png';
 import photoGluteus from '../photo/photoGluteus.png';
 import homePagePhoto from '../photo/homePagePhoto.jpg';
 import planPhoto from '../photo/planPhoto.png';
+import fiveDayPhoto from '../photo/planFiveDayPhoto.png';
+import p90x from '../photo/p90xPhoto.png';
+import crossFit from '../photo/crossFitPhoto.png';
 
 export {
     photoSholder,
@@ -26,6 +29,9 @@ export {
     admin,
     logoPhoto,
     homePagePhoto,
-    planPhoto
+    planPhoto,
+    fiveDayPhoto,
+    p90x,
+    crossFit,
 };
 

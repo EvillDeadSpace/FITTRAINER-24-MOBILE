@@ -19,6 +19,7 @@ export default function CardScroll() {
                 const url = `https://exercisedb.p.rapidapi.com/exercises/target/${exerciseName}`;
                 const data = await fetchData(url, exerciseOptions);
                 console.log(data);
+                
                 if (data && data.length > 0) {
                     // Prikupljanje svih informacija o vježbama
                     const allExercises = data.map(exercise => ({
@@ -46,7 +47,6 @@ export default function CardScroll() {
                         gifUrl: exercise.gifUrl,
                         equipment: exercise.equipment,
                     }));
-
                     // Prikazivanje informacija na ekranu ExercisePanel
                     navigation.navigate('ExercisePanel', { allExercises });
                 } else {

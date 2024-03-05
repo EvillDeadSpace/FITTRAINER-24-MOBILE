@@ -14,6 +14,12 @@ const ExercisesWeek = () => {
         navigation.navigate('ExercisesList');
     };
 
+    const handleExercisePress = (exerciseName) => {
+        console.log('Tražim vježbu:', exerciseName);  
+        navigation.navigate('ExerciseForward', {exerciseName});
+      };
+     
+
 
 
 
@@ -30,14 +36,14 @@ const ExercisesWeek = () => {
     return (
         <>
              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginRight:20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercises this week</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Explore all Plans and Programs</Text>
                     <TouchableOpacity style={{ backgroundColor: '#EAEAEA', padding: 5, borderRadius: 20 }} onPress={handleToExercisesList}>
                         <Arrow name="chevron-right" size={20} color="black" />
                     </TouchableOpacity>
                 </View>
             <ScrollView horizontal={true} style={styles.container}>
-                {split.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => console.log("prijava")}>
+                {split.slice(0,3).map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => handleExercisePress(item.name)}>
                         <View style={styles.card}>
                             <Image source={item.photo} style={styles.image} />
                             <TouchableOpacity style={styles.heartIcon} onPress={() => toggleHeart(index)}>
