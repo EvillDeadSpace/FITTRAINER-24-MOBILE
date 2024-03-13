@@ -30,7 +30,7 @@ const Split = [
         planOfEating: "No specific diet plan, but it is recommended to eat a balanced diet with plenty of protein and carbs.",
     },
     {
-        photo: images.planPhoto,
+        photo: images.insanity,
         name: "Insanity",
         price: "$99",
         description:" Insanity is an extreme cardio program utilizing only body weight and intense exercises to improve fitness and endurance.",
@@ -39,8 +39,8 @@ const Split = [
         planOfEating: "Includes a nutrition plan with a focus on balanced eating.",
     },
     {
-        photo: images.planPhoto,
-        name: "Bikini Body Guide",
+        photo: images.bikini,
+        name: "Bikini Body",
         price: "$49.99 for 12 weeks program",
         description:" BBG is a high-intensity program focusing on cardio and strength training to shape the body and increase endurance.",
         oftenWorkOut : "3 plus optional activities like walking or jogging",
@@ -48,7 +48,7 @@ const Split = [
         planOfEating: "Includes a nutrition guide with a focus on balanced eating.",
     },
     {
-        photo: images.planPhoto,
+        photo: images.highPhoto,
         name: "High-Intensity Interval Training (HIIT)",
         price: "$Free",
         description:"HIIT is a training method involving short but intense exercise periods with rest intervals, often used to improve fitness and burn fat.",
@@ -58,7 +58,7 @@ const Split = [
     },
     {
         name: "FST-7 (Chris Bumstead's Workout)",
-        photo: images.planPhoto,
+        photo: images.fst7Photo,
         price: "$199",
         description:"FST-7 is a training program designed to increase muscle size and definition through high-volume training and targeted exercises.",
         time: "60 - 90 min",
@@ -66,7 +66,7 @@ const Split = [
         planOfEating: "Includes a nutrition plan tailored to the exercise regimen.",
     },
     {
-        photo: images.planPhoto,
+        photo: images.strongPhoto,
         name: "StrongLifts 5x5",
         price: "$Free",
         description:"StrongLifts 5x5 is a strength training program focusing on five sets of five reps for five exercises to build muscle and strength.",
@@ -75,7 +75,7 @@ const Split = [
         planOfEating: "No specific diet plan, but it is recommended to eat a balanced diet with plenty of protein and carbs.",
     },
     {
-        photo: images.planPhoto,
+        photo: images.germanPhoto,
         name: "German Volume Training (GVT)",
         price: "$99",
         description:"GVT is a high-volume training program involving ten sets of ten reps for each exercise to increase muscle size and strength.",

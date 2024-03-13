@@ -25,7 +25,7 @@ const Login = () => {
 
     const handleLogin = async () => {
 
-        const url = "http://192.168.0.103:3000/api/login";
+        const url = "http://192.168.0.104:3000/api/login";
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -75,7 +75,6 @@ const Login = () => {
                     alignSelf: 'center',
                 }}
             />
-
 
             <TextInput
                 placeholder="Email"

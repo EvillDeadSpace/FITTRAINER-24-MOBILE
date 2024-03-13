@@ -16,7 +16,12 @@ import planPhoto from '../photo/planPhoto.png';
 import fiveDayPhoto from '../photo/planFiveDayPhoto.png';
 import p90x from '../photo/p90xPhoto.png';
 import crossFit from '../photo/crossFitPhoto.png';
-
+import insanity from '../photo/insantyPhoto.png';
+import bikini from '../photo/bikiniPhoto.png';
+import highPhoto from  '../photo/highPhoto.png';
+import fst7Photo from '../photo/fst7Photo.png';
+import strongPhoto from '../photo/5x5Photo.png';
+import germanPhoto from '../photo/germanPhoto.png';
 export {
     photoSholder,
     photoSixPack,
@@ -33,5 +38,11 @@ export {
     fiveDayPhoto,
     p90x,
     crossFit,
+    insanity,
+    bikini,
+    highPhoto,
+    fst7Photo,
+    strongPhoto,
+    germanPhoto
 };
 

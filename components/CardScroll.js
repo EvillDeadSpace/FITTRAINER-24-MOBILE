@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 
 export default function CardScroll() {
+    
     const [searchText, setSearchText] = useState('');
     const navigation = useNavigation();
 
@@ -26,6 +27,8 @@ export default function CardScroll() {
                         name: exercise.name,
                         gifUrl: exercise.gifUrl,
                         equipment: exercise.equipment,
+                        instructions: exercise.instructions,
+                        mainName: exerciseName,
                     }));
                     // Prikazivanje informacija na ekranu ExercisePanel
                     navigation.navigate('ExercisePanel', { allExercises });
@@ -46,6 +49,8 @@ export default function CardScroll() {
                         name: exercise.name,
                         gifUrl: exercise.gifUrl,
                         equipment: exercise.equipment,
+                        instructions: exercise.instructions,
+                        mainName: exerciseName,
                     }));
                     // Prikazivanje informacija na ekranu ExercisePanel
                     navigation.navigate('ExercisePanel', { allExercises });
@@ -84,7 +89,7 @@ export default function CardScroll() {
                                         style={styles.roundImage}
                                     />
                                 </View>
-                                <Text style={{ color: "white" }}>{exercise.name}</Text>
+                                <Text style={{ color: "black" }}>{exercise.name}</Text>
                             </View>
                         </TouchableOpacity>
                     ))}
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
         marginTop:25,
     },
     cardElevated: {
-        backgroundColor: '#af8cdb',
+        backgroundColor: '#fff',
         elevation: 4,
         shadowOffset: { width: 5, height: 5 },
         shadowColor: "#333",

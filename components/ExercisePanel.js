@@ -1,35 +1,101 @@
-import React from 'react';
-import { Text, View, Image, FlatList, StyleSheet } from 'react-native';
+import React, { useState, useReducer, useEffect } from 'react';
+import { Text, View, Image, FlatList, StyleSheet, TouchableOpacity,Pressable } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { MotiView } from 'moti';
+import { Skeleton } from 'moti/skeleton';
+
 
 const ExercisePanel = ({ route }) => {
+
+    const [dark, toggle] = useReducer((s) => !s, true);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
+
     const { allExercises } = route.params;
-    const renderExerciseItem = ({ item }) => (
-        <View style={styles.container}>
-            <Text style={styles.title}>{item.name}</Text>
-            <Image source={{ uri: item.gifUrl }} style={styles.image} />
-            <Text style={styles.equipment}>{item.equipment}</Text>
-        </View>
+
+    const mainName= allExercises[0].mainName;
+
+    const fixMainName  = mainName.charAt(0).toUpperCase() + mainName.slice(1);
+
+    const [expandedIndex, setExpandedIndex] = useState(null);
+
+    const toggleExpand = (index) => {
+        setExpandedIndex((prevIndex) => (prevIndex === index ? null : index));
+    };
+
+    const renderExerciseItem = ({ item, index }) => (
+        <TouchableOpacity onPress={() => toggleExpand(index)}>
+            <View style={styles.container}>
+                {loading ? (
+                    <MotiView
+                        transition={{
+                            type: 'timing',
+                        }}
+                        style={[styles.container, styles.padded]}
+                        animate={{ backgroundColor:  '#ffffff'   }}
+                    >
+                        <Skeleton backgroundColor="grey"  radius="round"  width={75} />
+                        <Spacer />
+                        <Skeleton backgroundColor="grey"  radius="round" width={150} height={150} />
+                        <Spacer height={24} />
+                        <Skeleton backgroundColor="grey"  radius="round" width={200}  />
+                    </MotiView>
+                ) : (
+                    <>
+                        <Text style={styles.title}>{item.name}</Text>
+                        <Image source={{ uri: item.gifUrl }} style={styles.image} />
+                        <Text style={styles.equipment}>{item.equipment}</Text>
+                        <Text>{item.mainExercises}</Text>
+                        {expandedIndex === index && (
+                            <Text style={{ textAlign: "center" }}>{item.instructions}</Text>
+                        )}
+                    </>
+                )}
+            </View>
+        </TouchableOpacity>
     );
+
     return (
+        <>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View style={styles.iconContainer}>
+            <Icon name="left" size={25} color="black" />
+          </View>
+        </TouchableOpacity>
+        <Text>{fixMainName}</Text>
+
         <FlatList
             data={allExercises}
             renderItem={renderExerciseItem}
             keyExtractor={(item, index) => index.toString()}
         />
+        </>
     );
 };
 
+const Spacer = ({ height = 16 }) => <View style={{ height }} />;
+
 const styles = StyleSheet.create({
+    padded: {
+        padding: 20,
+    },
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f0f0f0', // Boja pozadine
-        padding: 20,
+        backgroundColor: '#fff',
+        padding: 10,
         margin: 10,
-        marginTop: 50,
-        borderRadius: 25, // Radijus roga
-        borderWidth: 2, // Debljina granice
-        borderColor: '#333', // Boja granice
+        marginTop: 20,
+        borderRadius: 25,
+        borderWidth: 5,
+        borderColor: '#fff',
+
     },
     title: {
         fontSize: 18,
@@ -40,13 +106,12 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200,
-        borderRadius: 5, // Radijus roga slike
+        borderRadius: 5,
         marginBottom: 10,
     },
     equipment: {
         fontStyle: 'italic',
-
-        color: '#555', // Boja teksta
+        color: '#555',
     },
 });
 

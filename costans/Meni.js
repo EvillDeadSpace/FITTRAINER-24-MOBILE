@@ -20,10 +20,8 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
 
     const navigator = useNavigation();
 
-
-
     useEffect(() => {
-        fetch(`http://192.168.0.103:3000/api/user/${username}`)
+        fetch(`http://192.168.0.104:3000/api/user/${username}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

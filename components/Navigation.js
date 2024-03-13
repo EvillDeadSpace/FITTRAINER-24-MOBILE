@@ -57,7 +57,7 @@ const BottomTabNavigator = () => {
                             width: 36,
                             height: 36,
                             borderRadius: 18,
-                            backgroundColor: focused ? '#af8cdb' : 'transparent',
+                            backgroundColor: focused ? '#9037CD' : 'transparent',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
@@ -77,7 +77,7 @@ const BottomTabNavigator = () => {
                             width: 36,
                             height: 36,
                             borderRadius: 18,
-                            backgroundColor: focused ? '#af8cdb' : 'transparent',
+                            backgroundColor: focused ? '#9037CD' : 'transparent',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
@@ -95,7 +95,7 @@ const BottomTabNavigator = () => {
                             width: 36,
                             height: 36,
                             borderRadius: 18,
-                            backgroundColor: focused ? '#af8cdb' : 'transparent',
+                            backgroundColor: focused ? '#9037CD' : 'transparent',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
@@ -113,7 +113,7 @@ const BottomTabNavigator = () => {
                             width: 36,
                             height: 36,
                             borderRadius: 18,
-                            backgroundColor: focused ? '#af8cdb' : 'transparent',
+                            backgroundColor: focused ? '#9037CD' : 'transparent',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
@@ -137,7 +137,7 @@ const BottomTabNavigator = () => {
                             width: 36,
                             height: 36,
                             borderRadius: 18,
-                            backgroundColor: focused ? '#af8cdb' : 'transparent',
+                            backgroundColor: focused ? '#9037CD' : 'transparent',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>

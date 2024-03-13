@@ -5,9 +5,8 @@ import Arrow from "react-native-vector-icons/AntDesign";
 import Hearto from 'react-native-vector-icons/AntDesign';   //empty heart
 import Heart from 'react-native-vector-icons/AntDesign';  //full heart
 import Clock from 'react-native-vector-icons/AntDesign';
+
 import { Button } from '@ui-kitten/components';
-
-
 import { useNavigation } from '@react-navigation/native';
 
 const ExerciseForward = ({ route }) => {
@@ -34,7 +33,6 @@ const ExerciseForward = ({ route }) => {
                     <Hearto name="hearto" size={25} color="black" />
                 </View>
                 <View style={styles.container}>
-
                     <Image source={filteredData.photo} style={styles.image} />
                     <View style={{ marginTop: 85 }}>
                         <Text style={styles.exerciseName}>{filteredData.name}</Text>
@@ -42,15 +40,9 @@ const ExerciseForward = ({ route }) => {
                             <Clock name="clockcircleo" size={20} color="blue" />
                             <Text style={{marginLeft:10}}>{filteredData.time}</Text>
                         </View>
-                        
                         <Text style={{textAlign:"center", fontWeight:"bold", fontSize: 22, marginTop:15, marginBottom:15}}>{filteredData.price}</Text>
-
-                        <Text style={{textAlign:"center", paddingHorizontal:20}}>{filteredData.description}</Text>
-                     
-
-
-                    </View>
-                    
+                        <Text style={{textAlign:"center", paddingHorizontal:20}}>{filteredData.description}</Text>            
+                    </View> 
                 </View>
                 <Button
                 style={styles.button}
