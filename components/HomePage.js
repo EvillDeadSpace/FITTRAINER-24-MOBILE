@@ -8,16 +8,11 @@ import Meni from '../costans/Meni';
 import { UserContext } from './Contex';
 import ExercisesWeek from "../costans/ExercisesWeek";
 import { useNavigation } from '@react-navigation/native';
-
+import ExercisesWeekScroll from './ExercisesWeekScroll';
 const HomePage = () => {
 
 
     const navigation = useNavigation();
-
-    const handleToCoachList = () => {
-        navigation.navigate('CoachList');
-    };
-
 
     const { username, userImage } = useContext(UserContext);
 
@@ -47,17 +42,12 @@ const HomePage = () => {
                 </TouchableOpacity>
             </View>
             <Meni isOpen={isMenuOpen} onClose={() => setMenuOpen(false)} onMenuItemPress={handleMenuItemPress} />
-            <ScrollView >
+            <ScrollView style={{marginTop:-10}} >
                 <CardScroll />
                 <ExercisesWeek />
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginRight:20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercises this week coach</Text>
-                    <TouchableOpacity style={{ backgroundColor: '#EAEAEA', padding: 5, borderRadius: 20 }} onPress={handleToCoachList}>
-                        <Arrow name="chevron-right" size={20} color="black" />
-                    </TouchableOpacity>
-                </View>
+                <ExercisesWeekScroll />
             </ScrollView>
-            <Text>KURCINA</Text>
+          
         </>
     );
 };

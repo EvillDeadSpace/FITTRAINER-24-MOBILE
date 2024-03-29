@@ -21,7 +21,8 @@ import Favorite from "./components/Favorite";
 import ExercisesList from './costans/ExercisesList';
 import CoachList from './costans/CoachList';
 import ExerciseForward from './costans/ExercisesForward';
-
+import ExercisesWeekScroll from './components/ExercisesWeekScroll';
+import ChoachForward from './costans/ChoachForward';
 const Stack  = createStackNavigator();
 
 const App = () => {
@@ -47,6 +48,8 @@ const App = () => {
                         <Stack.Screen name='ExercisesList' component={ExercisesList} options={{ headerShown: false }}/>
                         <Stack.Screen name='CoachList' component={CoachList} options={{ headerShown: false }}/>
                         <Stack.Screen name='ExerciseForward' component={ExerciseForward} options={{ headerShown: false }}/>
+                        <Stack.Screen name='ChoachForward' component={ChoachForward} options={{ headerShown: false }}/>
+                        <Stack.Screen name='ExercisesWeekScroll' component={ExercisesWeekScroll} options={{ headerShown: false }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
               </UserProvider>

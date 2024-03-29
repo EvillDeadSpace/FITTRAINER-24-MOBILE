@@ -22,6 +22,12 @@ import highPhoto from  '../photo/highPhoto.png';
 import fst7Photo from '../photo/fst7Photo.png';
 import strongPhoto from '../photo/5x5Photo.png';
 import germanPhoto from '../photo/germanPhoto.png';
+import photoCoach1 from '../photo/photoChoach1.png';
+import photoCoach2 from '../photo/photoChoach2.jpg';
+import photoCoach3 from '../photo/photoChoach3.jpg';
+import photoCoach4 from '../photo/photoChoach4.jpg';
+import photoCoach5 from '../photo/photoChoach5.jpg';
+
 export {
     photoSholder,
     photoSixPack,
@@ -43,6 +49,12 @@ export {
     highPhoto,
     fst7Photo,
     strongPhoto,
-    germanPhoto
+    germanPhoto,
+    photoCoach1,
+    photoCoach2,
+    photoCoach3,
+    photoCoach4,
+    photoCoach5,
+
 };
 

@@ -20,9 +20,6 @@ const ExercisesWeek = () => {
       };
      
 
-
-
-
     const [heartVisibleMap, setHeartVisibleMap] = useState({}); // Stanje za praćenje vidljivosti srca
 
     // Funkcija koja mijenja stanje srca za određenu karticu

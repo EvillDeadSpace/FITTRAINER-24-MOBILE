@@ -3,10 +3,10 @@ import { Text, View, Image, FlatList, StyleSheet, TouchableOpacity,Pressable } f
 import Icon from 'react-native-vector-icons/AntDesign';
 import { MotiView } from 'moti';
 import { Skeleton } from 'moti/skeleton';
-
+import { useNavigation } from '@react-navigation/native';
 
 const ExercisePanel = ({ route }) => {
-
+    const navigation = useNavigation();
     const [dark, toggle] = useReducer((s) => !s, true);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -62,26 +62,44 @@ const ExercisePanel = ({ route }) => {
     );
 
     return (
-        <>
+        <View>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View style={styles.iconContainer}>
             <Icon name="left" size={25} color="black" />
           </View>
         </TouchableOpacity>
-        <Text>{fixMainName}</Text>
+     <Text style={styles.text}>{fixMainName}</Text>
+      </View>
+        </TouchableOpacity>
+    
 
         <FlatList
             data={allExercises}
             renderItem={renderExerciseItem}
             keyExtractor={(item, index) => index.toString()}
         />
-        </>
+        </View>
     );
 };
 
 const Spacer = ({ height = 16 }) => <View style={{ height }} />;
 
 const styles = StyleSheet.create({
+    text: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginLeft: 10,
+      },
+    
+    header: {
+        marginTop: 40,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+        marginLeft: 20,
+      },
     padded: {
         padding: 20,
     },
