@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useCallback, Picker } from 'react';
 import { View, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text, Button } from "@ui-kitten/components";
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,9 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import base64 from 'react-native-base64'
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import RNPickerSelect from 'react-native-picker-select';
+
 
 
 const Signup = () => {
+
+
+
     const navigation = useNavigation();
 
     const [password, setPassword] = useState('');
@@ -17,7 +22,7 @@ const Signup = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [email, setEmail] = useState('');
     const [image, setImage] = useState(null);
-
+    const [selectedRole, setSelectedRole] = useState('user');
 
 
     const pickImage = async () => {
@@ -34,18 +39,18 @@ const Signup = () => {
             setImage(result.assets[0].uri);
         }
     };
-
+    
     const handleSignup = async () => {
 
         try {
-
-            const img_str=base64.encode(image);
-            const response = await fetch('http://192.168.0.103:3000/api/signup', {
+            console.log(selectedRole)
+            const img_str = base64.encode(image);
+            const response = await fetch('http://192.168.0.104:3000/api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, username, password, repeatPassword, image:img_str})
+                body: JSON.stringify({ email, username, password, repeatPassword, image: img_str, role: selectedRole})
             });
 
 
@@ -67,7 +72,7 @@ const Signup = () => {
 
 
     return (
-        <View style={{ backgroundColor: '#FFFFFF', flex: 1, marginTop:30, }}>
+        <View style={{ backgroundColor: '#FFFFFF', flex: 1, marginTop: 30, }}>
             <Image
                 source={images.admin}
                 style={{
@@ -88,11 +93,12 @@ const Signup = () => {
                     borderColor: 'gray',
                     borderWidth: 1,
                     marginTop: 20,
-                    marginLeft:20,
-                    marginRight:20,
+                    marginLeft: 20,
+                    marginRight: 20,
                     borderRadius: 40,
                     fontSize: 14,
-                    paddingHorizontal: 30, }}
+                    paddingHorizontal: 30,
+                }}
             />
             <TextInput
                 placeholder="Email"
@@ -103,26 +109,29 @@ const Signup = () => {
                     borderColor: 'gray',
                     borderWidth: 1,
                     marginTop: 20,
-                    marginLeft:20,
-                    marginRight:20,
+                    marginLeft: 20,
+                    marginRight: 20,
                     borderRadius: 40,
                     fontSize: 14,
-                    paddingHorizontal: 30, }}
+                    paddingHorizontal: 30,
+                }}
             />
             <TextInput
                 placeholder="Password"
                 value={password}
                 onChangeText={(text) => setPassword(text)}
                 secureTextEntry={true}
-                style={{  height: 55,
+                style={{
+                    height: 55,
                     borderColor: 'gray',
                     borderWidth: 1,
                     marginTop: 20,
-                    marginLeft:20,
-                    marginRight:20,
+                    marginLeft: 20,
+                    marginRight: 20,
                     borderRadius: 40,
                     fontSize: 14,
-                    paddingHorizontal: 30, }}
+                    paddingHorizontal: 30,
+                }}
             />
             <TextInput
                 placeholder="Repeat Password"
@@ -134,12 +143,25 @@ const Signup = () => {
                     borderColor: 'gray',
                     borderWidth: 1,
                     marginTop: 20,
-                    marginLeft:20,
-                    marginRight:20,
+                    marginLeft: 20,
+                    marginRight: 20,
                     borderRadius: 40,
                     fontSize: 14,
-                    paddingHorizontal: 30,  }}
+                    paddingHorizontal: 30,
+                }}
             />
+            <View style={{ marginTop: 20, marginBottom: 20, marginLeft: 20, marginRight: 20, }}>
+                
+                <RNPickerSelect
+                    style={{ backgroundColor: '#E0E0E0', borderRadius: 40 }}
+                    placeholder={{ label: 'Odaberite ulogu', value: null }}
+                    onValueChange={(value) => setSelectedRole(value)}
+                    items={[
+                        { label: 'Trener', value: 'coach' },
+                        { label: 'Korisnik', value: 'user' },
+                    ]}
+                />
+            </View>
             <View style={styles.container}>
                 <View style={styles.imageTextContainer}>
                     <View style={styles.imageContainer}>
@@ -169,11 +191,11 @@ const Signup = () => {
                 Sign Up
             </Button>
             <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginTop: 80, alignSelf: 'center' }}>
-               <View >
-                <Text style={{marginBottom:30}}>
-                    Already have an account? <Text style={{ fontWeight: 'bold', color: 'blue' }}>Login</Text>
-                </Text>
-               </View>
+                <View >
+                    <Text style={{ marginBottom: 30 }}>
+                        Already have an account? <Text style={{ fontWeight: 'bold', color: 'blue' }}>Login</Text>
+                    </Text>
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -183,7 +205,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:10,
+        marginTop: 10,
     },
     imageTextContainer: {
         flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, Image, } from "react-native";
 import Arrow from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import TrainerList from '../costans/TreinersList';
@@ -23,7 +23,7 @@ const ExercisesWeekScroll = () => {
     return (
         <View>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginLeft: 20, marginRight:20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Exercises this week coach</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Find a Coach</Text>
                     <TouchableOpacity style={{ backgroundColor: '#EAEAEA', padding: 5, borderRadius: 20 }} onPress={handleToCoachList}>
                         <Arrow name="chevron-right" size={20} color="black" />
                     </TouchableOpacity>

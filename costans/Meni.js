@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     avatarName: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 20,
     },
     menuItem: {
         marginLeft: 50,

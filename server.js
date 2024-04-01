@@ -13,6 +13,8 @@ const userSchema = new Schema({
     email: String,
     password: String,
     image: String,
+    role: String,
+    favorites: [{ type: mongoose.Schema.ObjectId, ref: 'Item' }] // Referenca na šemu za omiljene stavke
 });
 
 // Kreiranje modela korisnika
@@ -56,7 +58,7 @@ app.get('/api/signup', (req, res) => {
 app.post('/api/signup', async (req, res) => {
     console.log('Pristigao zahtev za signup:', req.body);
     try {
-        const { email, username ,password, repeatPassword, image  } = req.body;
+        const { email, username ,password, repeatPassword, image, role  } = req.body;
 
         // Provera da li su lozinke iste
         if (password !== repeatPassword) {
@@ -77,7 +79,7 @@ app.post('/api/signup', async (req, res) => {
         }
 
         // Kreiranje novog korisnika u bazi podataka
-        const newUser = new User({ email,username, password, image });
+        const newUser = new User({ email,username, password, image, role });
         await newUser.save();
 
         // Generisanje JWT tokena
@@ -100,6 +102,18 @@ app.listen(PORT, () => {
 });
 
 
+app.get('/api/coaches', async (req, res) => {
+    try {
+        
+      const coaches = await User.find({ role: 'coach' });
+      res.json(coaches);
+    } catch (err) {
+      console.error('Greška prilikom dohvaćanja trenera iz baze:', err);
+      res.status(500).json({ error: 'Greška prilikom dohvaćanja trenera iz baze' });
+    }
+  });
+
+
 app.post('/api/login', async (req, res) => {
     console.log('Pristigao zahtev za prijavu:', req.body);
 
@@ -120,11 +134,42 @@ app.post('/api/login', async (req, res) => {
             console.error('Neuspesna prijava: Korisnik ne postoji ili lozinka nije ispravna.');
             res.status(401).json({ success: false, message: 'Korisnik ne postoji ili lozinka nije ispravna.' });
         }
+
     } catch (error) {
         console.error('Došlo je do greške prilikom prijave:', error);
         res.status(500).json({ success: false, message: 'Došlo je do greške prilikom prijave.' });
     }
 });
+
+app.post('/api/user/addfavorite/:userId/:itemId', async (req, res) => {
+    try {
+        const { userId, itemId } = req.params;
+
+        // Pronađi korisnika u bazi podataka
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
+        }
+
+        // Provjeri da li je stavka već označena kao omiljena
+        if (user.favorites.includes(itemId)) {
+            return res.status(400).json({ success: false, message: 'Stavka je već dodana u omiljene.' });
+        }
+
+        // Dodaj stavku u omiljene stavke korisnika
+        user.favorites.push(itemId);
+        await user.save();
+
+        // Vrati uspješan odgovor
+        return res.json({ success: true, message: 'Stavka dodana u omiljene.' });
+    } catch (error) {
+        console.error('Došlo je do greške prilikom dodavanja stavke u omiljene:', error);
+        res.status(500).json({ success: false, message: 'Došlo je do greške prilikom dodavanja stavke u omiljene.' });
+    }
+});
+
+
 function verifyToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];

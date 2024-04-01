@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -6,24 +7,50 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native";
 import trainers from "./TreinersList";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/AntDesign";
+import base64 from "react-native-base64";
+
+
 
 export default function CoachList() {
   const navigation = useNavigation();
+  const [coaches, setCoaches] = useState([]);
 
+useEffect(() => {
+  const fetchCoach = async () => {
+    try {
+      const response = await fetch('http://192.168.0.104:3000/api/coaches');
+      const data = await response.json();
+   
+      const dataFinale = data.map (coach=> {
+        const image = base64.decode(coach.image);
+        return {...coach, image};
+      
+      })
 
+      console.log(dataFinale);
 
+      setCoaches(dataFinale);
+    } catch (error) {
+      
+    }
+  }
+
+  fetchCoach();
+}, []);
+
+  console.log(coaches);
+  
 
   const onPressTrainer = (trainerName) => {
     const trainer = trainers.find((trainer) => trainer.name === trainerName);
     navigation.navigate("ChoachForward", { trainer });
     console.log(trainer.name);
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -33,45 +60,34 @@ export default function CoachList() {
             <Icon name="left" size={25} color="black" />
           </View>
         </TouchableOpacity>
-        <Text style={styles.text}>Plan and Program</Text>
+        <Text style={styles.text}>Coach</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-  {/* Mapiranje trenera */}
-  {trainers.map((item, index) => (
-    // Prikaži dva trenera u svakom redu
-    index % 2 === 0 && (
-      <View key={index} style={styles.row}>
-        {/* Prvi trener u redu */}
-        <TouchableOpacity onPress={() => onPressTrainer(item.name)}>
-          <View style={styles.card}>
-            <Image source={item.image} style={styles.image} />
-            <View style={styles.textContainer}>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text style={styles.specialization}>{item.specialization}</Text>
-              <Text style={styles.price}>{item.price}</Text>
-              {/* Ostatak vašeg dodatnog sadržaja */}
-            </View>
-          </View>
-        </TouchableOpacity>
-        {/* Drugi trener u redu (ako postoji) */}
-        {trainers[index + 1] && (
-          <TouchableOpacity onPress={() => onPressTrainer(trainers[index + 1].name)}>
+      {
+    coaches.map((item, index) => (
+      // Prikaži dva trenera u svakom redu
+         (
+        <View key={index} style={styles.row}>
+          {/* Prvi trener u redu */}
+          <TouchableOpacity onPress={() => console.log("buduci problem mene ")}>
             <View style={styles.card}>
-              <Image source={trainers[index + 1].image} style={styles.image} />
+            <Image source={{ uri: item.image }} style={styles.image} />
               <View style={styles.textContainer}>
-                <Text style={styles.title}>{trainers[index + 1].name}</Text>
-                <Text style={styles.specialization}>{trainers[index + 1].specialization}</Text>
-                <Text style={styles.price}>{trainers[index + 1].price}</Text>
-                {/* Ostatak vašeg dodatnog sadržaja */}
+                <Text style={styles.title}>{item.username}</Text>
+                <Text style={styles.specialization}>{item.specialization}</Text>
+                <Text style={styles.price}>{item.price}</Text>
               </View>
             </View>
           </TouchableOpacity>
-        )}
-      </View>
-    )
-  ))}
+        </View>
+      )
+    ))
+   }
+   
+ 
 </ScrollView>
+   
     </View>
   );
 }
@@ -138,7 +154,8 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     alignItems: "center", // Changed alignment to start from left
-    flexDirection: "column", // Changed flexDirection to column
+    flexDirection: "row", 
+    flexWrap: "wrap",// Changed flexDirection to column
   },
   row: {
     flexDirection: "row",

@@ -1,15 +1,16 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/AntDesign';
 import * as photo from '../costans/photo'
+import Meni from '../costans/Meni';
 import { UserContext } from './Contex';
+import { Button } from '@ui-kitten/components';
 
 const MapCard = () => {
 
 
-    const { username } = useContext(UserContext);
-    const { picture } = useContext(UserContext);
+    const { username, userImage,setUserImage } = useContext(UserContext);
 
     return (
         <View style={styles.container}>
@@ -17,17 +18,16 @@ const MapCard = () => {
             <View style={styles.donjiDio}>
                 <View style={styles.donjiView}>
                     <View style={styles.tekst}>
-                        <Image source={photo.logoPhoto} style={styles.photo} />
+                        <Image source={{ uri: userImage }} style={styles.photo} />
                         <Text style={{marginLeft:10, color:"#FFFFFF", fontSize:16, fontWeight:"bold"}}>{username}</Text>
                         <View style={styles.ikoniceContainer}>
                             <Icon name="message1" size={20} color="#FFAD00" style={styles.ikonica} />
                             <Icon name="phone" size={20} color="#FFAD00" style={styles.ikonica} />
                         </View>
-
+                        
                     </View>
                     <View style={styles.donjiViewDonjidio}>
-                        <Text >{username}</Text>
-                        <Text>{picture}</Text>
+                       <Button>The way to the nearest gym</Button>
                     </View>
                 </View>
             </View>

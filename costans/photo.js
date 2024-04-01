@@ -27,6 +27,8 @@ import photoCoach2 from '../photo/photoChoach2.jpg';
 import photoCoach3 from '../photo/photoChoach3.jpg';
 import photoCoach4 from '../photo/photoChoach4.jpg';
 import photoCoach5 from '../photo/photoChoach5.jpg';
+import photoFindTrainer from '../photo/photoFindTrainer.png';
+import photoCoach from '../photo/photoCoach.png';
 
 export {
     photoSholder,
@@ -55,6 +57,8 @@ export {
     photoCoach3,
     photoCoach4,
     photoCoach5,
+    photoFindTrainer,
+    photoCoach
 
 };
 
