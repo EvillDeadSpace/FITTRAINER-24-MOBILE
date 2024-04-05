@@ -1,23 +1,57 @@
 
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
+import React, {useEffect, useState} from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image,  } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Arrow from "react-native-vector-icons/AntDesign";
 import Hearto from 'react-native-vector-icons/AntDesign';  
 import Clock from 'react-native-vector-icons/AntDesign';
-
+import axios from "axios";
 import { Button } from '@ui-kitten/components';
-
+import base64 from "react-native-base64";
 const ChoachForward = ({ route }) => {
+    const [finalUserData, setFinalUserData] = useState({});
+    const [image, setImage] = useState(null);
+    const [coach, setCoach] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); 
+
 
     const navigation = useNavigation();
-    const { trainer } = route.params;
-    console.log(trainer);
-    console.log(trainer.name);
 
+    const {coaches} = route.params;
+    const { trainerName } = route.params;
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const response = await fetch(`http://192.168.0.104:3000/api/username/${trainerName}`);
+            const userData = await response.json();
+    
+            if (userData && userData.length > 0) { // Provjera postojanja i ispravnosti podataka o korisniku
+              const image = userData[0].image;
+              const finalImage = base64.decode(image);
+    
+              setImage(finalImage);
+              setFinalUserData(userData);
+              setIsLoading(false);
+            } else {
+                
+              console.error('Podaci o korisniku nisu definirani ili prazni.');
+              setIsLoading(false);
+            }
+          } catch (error) {
+            console.error('Greška prilikom dohvaćanja podataka o korisniku:', error);
+            setIsLoading(false);
+          }
+        };
+          fetchUserData();
+      }, [trainerName]);
+    
+   
+      console.log(finalUserData);
 
     const handleBuy = () => {
-        console.log(`Kupujem trenera ${trainer.name}`);
+        console.log(`Kupujem trenera ${finalUserData[0].username}!`);
     }
 
 
@@ -31,22 +65,31 @@ const ChoachForward = ({ route }) => {
                     <Hearto name="hearto" size={25} color="black" />
                 </View>
                 <View style={styles.container}>
-                    <Image source={trainer.image} style={styles.image} />
+                    <Image source={{ }} style={styles.image} />
                     <View style={{ marginTop: 85 }}>
-                        <Text style={styles.exerciseName}>{trainer.name}</Text>
+                        <Image source={{ uri: image }} style={styles.image} />
                         <View style={styles.timeContainer}>
                             <Clock name="clockcircleo" size={20} color="blue" />
-                            <Text style={{marginLeft:10}}>{trainer.time}</Text>
-                            <Text style={{textAlign:"center", paddingHorizontal:20, marginTop:10, fontWeight:"bold", fontSize:16}}>{trainer.specialization}</Text>     
+                            {
+                                isLoading ? (
+                                    <Text>Kurac</Text>
+                                ) : (
+                                    <View>
+                                    <Text>{finalUserData[0].username}</Text>
+                                    <Text>{finalUserData[0].password}</Text>
+                                    </View>
+                                )
+                            }
                         </View>
-                        <Text style={{textAlign:"center", fontWeight:"bold", fontSize: 22, marginTop:15, marginBottom:15}}>{trainer.price}</Text>
+                        <Text style={{textAlign:"center", fontWeight:"bold", fontSize: 22, marginTop:15, marginBottom:15}}>{}</Text>
                      
-                        <Text style={{textAlign:"center", paddingHorizontal:20}}>{trainer.about}</Text>            
+                        <Text style={{textAlign:"center", paddingHorizontal:20}}></Text>            
                     </View> 
+                 
                 </View>
                 <Button
                 style={styles.button}
-                        onPress={() => handleBuy()}><Text>Buy {trainer.name}</Text></Button>
+                        onPress={() => handleBuy()}><Text>Buy </Text></Button>
             </View>
         </>
     );

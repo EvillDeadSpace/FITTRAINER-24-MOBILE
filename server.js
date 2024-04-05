@@ -14,6 +14,8 @@ const userSchema = new Schema({
     password: String,
     image: String,
     role: String,
+    price: Number,
+    specialization: String,
     favorites: [{ type: mongoose.Schema.ObjectId, ref: 'Item' }] // Referenca na šemu za omiljene stavke
 });
 
@@ -34,22 +36,26 @@ app.get('/', (req, res) => {
     res.send('Dobrodošli na server!');
 });
 
-app.get('/api/user/:username', async (req, res) => {
+app.get('/api/username/:username', async (req, res) => {
     try {
-        const { username } = req.params;
-
-        const user = await User.findOne({ username });
+        const { username } = req.params; // Dobavljanje korisničkog imena iz URL-a
+        const user = await User.find({ username: username });
 
         if (!user) {
-            return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
+            return res.status(404).json({ error: 'Korisnik nije pronađen.' });
         }
 
         res.json(user);
-    } catch (error) {
-        console.error('Došlo je do greške prilikom preuzimanja korisnika:', error);
-        res.status(500).json({ success: false, message: 'Došlo je do greške prilikom preuzimanja korisnika.' });
+    } catch (err) {
+        console.error('Greška prilikom dohvaćanja trenera iz baze:', err);
+        res.status(500).json({ error: 'Greška prilikom dohvaćanja trenera iz baze' });
     }
 });
+
+
+
+
+
 
 app.get('/api/signup', (req, res) => {
     res.send('Dobrodošli na signup stranicu!');
@@ -58,7 +64,7 @@ app.get('/api/signup', (req, res) => {
 app.post('/api/signup', async (req, res) => {
     console.log('Pristigao zahtev za signup:', req.body);
     try {
-        const { email, username ,password, repeatPassword, image, role  } = req.body;
+        const { email, username, password, repeatPassword, image, role } = req.body;
 
         // Provera da li su lozinke iste
         if (password !== repeatPassword) {
@@ -68,9 +74,9 @@ app.post('/api/signup', async (req, res) => {
         // Provera da li korisnik već postoji u bazi podataka
         const existingUser = await User.findOne({ email });
 
-        const exisingUsername = await User.findOne({username});
+        const exisingUsername = await User.findOne({ username });
 
-        if (exisingUsername){
+        if (exisingUsername) {
             return res.status(400).json({ success: false, message: 'Korisnik sa ovim usernamom već postoji.' });
         }
 
@@ -79,7 +85,7 @@ app.post('/api/signup', async (req, res) => {
         }
 
         // Kreiranje novog korisnika u bazi podataka
-        const newUser = new User({ email,username, password, image, role });
+        const newUser = new User({ email, username, password, image, role });
         await newUser.save();
 
         // Generisanje JWT tokena
@@ -104,14 +110,14 @@ app.listen(PORT, () => {
 
 app.get('/api/coaches', async (req, res) => {
     try {
-        
-      const coaches = await User.find({ role: 'coach' });
-      res.json(coaches);
+
+        const coaches = await User.find({ role: 'coach' });
+        res.json(coaches);
     } catch (err) {
-      console.error('Greška prilikom dohvaćanja trenera iz baze:', err);
-      res.status(500).json({ error: 'Greška prilikom dohvaćanja trenera iz baze' });
+        console.error('Greška prilikom dohvaćanja trenera iz baze:', err);
+        res.status(500).json({ error: 'Greška prilikom dohvaćanja trenera iz baze' });
     }
-  });
+});
 
 
 app.post('/api/login', async (req, res) => {
@@ -120,16 +126,16 @@ app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
-            // Provera da li korisnik postoji u bazi podataka
-            const existingUser = await User.findOne({ email, password }).lean();
-            console.log(User);
+        // Provera da li korisnik postoji u bazi podataka
+        const existingUser = await User.findOne({ email, password }).lean();
+        console.log(User);
 
-             const secretKey = 'tajna'; // Promijenite s dinamičkim tajnim ključem kasnije
-             const token = jwt.sign({ email, password }, secretKey, { expiresIn: '1h' });
+        const secretKey = 'tajna'; // Promijenite s dinamičkim tajnim ključem kasnije
+        const token = jwt.sign({ email, password }, secretKey, { expiresIn: '1h' });
 
         if (existingUser) {
             console.log('Uspesna prijava:', existingUser);
-            res.json({ success: true, message: 'Uspesna prijava.', user: { username: existingUser.username }, token: token,});
+            res.json({ success: true, message: 'Uspesna prijava.', user: { username: existingUser.username }, token: token, });
         } else {
             console.error('Neuspesna prijava: Korisnik ne postoji ili lozinka nije ispravna.');
             res.status(401).json({ success: false, message: 'Korisnik ne postoji ili lozinka nije ispravna.' });
@@ -168,6 +174,51 @@ app.post('/api/user/addfavorite/:userId/:itemId', async (req, res) => {
         res.status(500).json({ success: false, message: 'Došlo je do greške prilikom dodavanja stavke u omiljene.' });
     }
 });
+
+app.get('/api/user/:username', async (req, res) => {
+
+    const { specilization, price } = req.body;
+
+    try {
+        const { username } = req.params;
+        const user = await User.find({ username: username });
+
+        if (!user || !user.length) {
+            return res.status(404).json({ error: 'Korisnik nije pronađen.' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        console.error('Greška prilikom dohvaćanja trenera iz baze:', err);
+        res.status(500).json({ error: 'Greška prilikom dohvaćanja trenera iz baze' });
+    }
+});
+
+app.post('/api/coaches/price', async (req, res) => {
+    const { username, price, specialization } = req.body;
+  
+    try {
+      // Pronađi trenera u bazi podataka prema korisničkom imenu
+      const coach = await User.findOne({ username: username });
+  
+      if (!coach) {
+        return res.status(404).json({ error: 'Trener nije pronađen.' });
+      }
+  
+      coach.specialization = specialization;
+
+      // Postavi cijenu treneru
+      coach.price = price;
+  
+      // Spremi promjene u bazu podataka
+      await coach.save();
+  
+      res.status(200).json({ message: 'Cijena uspješno dodana treneru.' });
+    } catch (error) {
+      console.error('Greška prilikom dodavanja cijene treneru:', error);
+      res.status(500).json({ error: 'Greška prilikom dodavanja cijene treneru.' });
+    }
+  });
 
 
 function verifyToken(req, res, next) {

@@ -21,7 +21,7 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
     const navigator = useNavigation();
 
     useEffect(() => {
-        fetch(`http://192.168.0.104:3000/api/user/${username}`)
+        fetch(`http://192.168.0.104:3000/api/username/${username}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -29,10 +29,10 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
                 return response.json();
             })
             .then(data => {
-                setUserData(data);
-                const userImage = data.image;
+                setUserData(data[0]);
+                const userImage = data[0].image;
                 const finalImage = Base64.decode(userImage);
-                console.log(finalImage);
+                console.log( "ovo je finalna slika");
                 setUserData(finalImage);
                 setUserImage(finalImage);
 
@@ -90,11 +90,11 @@ const Meni = ({ isOpen, onClose, onMenuItemPress }) => {
                             <Text style={styles.text}>Orders</Text>
                         </View>
                     </TouchableOpacity>
-
-                    <TouchableOpacity  style={styles.menuItem} >
+ 
+                    <TouchableOpacity  style={styles.menuItem} onPress={()=>handleMenuItemPress('CoachSettings')}  >
                         <View style={styles.menuItemContent}>
-                            <Feather size={20} style={styles.icon} name="help-circle" />
-                            <Text style={styles.text}>Help Center</Text>
+                            <Feather size={20} style={styles.icon} name="settings" />
+                            <Text style={styles.text}>Coach Settings</Text>
                         </View>
                     </TouchableOpacity>
 

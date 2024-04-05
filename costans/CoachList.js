@@ -28,29 +28,24 @@ useEffect(() => {
    
       const dataFinale = data.map (coach=> {
         const image = base64.decode(coach.image);
+        console.log(coach);
         return {...coach, image};
       
       })
-
-      console.log(dataFinale);
-
       setCoaches(dataFinale);
     } catch (error) {
       
     }
   }
-
   fetchCoach();
 }, []);
 
-  console.log(coaches);
-  
 
-  const onPressTrainer = (trainerName) => {
-    const trainer = trainers.find((trainer) => trainer.name === trainerName);
-    navigation.navigate("ChoachForward", { trainer });
-    console.log(trainer.name);
-  };
+const onPressTrainer = (trainerName) => {
+  
+  navigation.navigate("ChoachForward", { coaches, trainerName });
+
+};
 
   return (
     <View style={styles.container}>
@@ -62,21 +57,18 @@ useEffect(() => {
         </TouchableOpacity>
         <Text style={styles.text}>Coach</Text>
       </View>
-
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
       {
     coaches.map((item, index) => (
-      // Prikaži dva trenera u svakom redu
          (
         <View key={index} style={styles.row}>
-          {/* Prvi trener u redu */}
-          <TouchableOpacity onPress={() => console.log("buduci problem mene ")}>
+          <TouchableOpacity onPress={() => onPressTrainer(item.username)}>
             <View style={styles.card}>
             <Image source={{ uri: item.image }} style={styles.image} />
               <View style={styles.textContainer}>
                 <Text style={styles.title}>{item.username}</Text>
                 <Text style={styles.specialization}>{item.specialization}</Text>
-                <Text style={styles.price}>{item.price}</Text>
+                <Text style={styles.price}>{item.price} $</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -112,8 +104,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   price: {
-    fontSize: 16,
+    fontSize: 24,
     color: "gray",
+    fontWeight: "bold",
   },
   specialization: {
     fontSize: 16,
@@ -131,6 +124,7 @@ const styles = StyleSheet.create({
   price: {
     color: "black",
     fontSize: 14,
+    fontWeight: "bold",
   },
   image: {
     width: "100%",
