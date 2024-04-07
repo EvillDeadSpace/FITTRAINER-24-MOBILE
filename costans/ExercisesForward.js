@@ -8,6 +8,9 @@ import Clock from 'react-native-vector-icons/AntDesign';
 
 import { Button } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../components/Contex';
+
+import React, { useContext } from 'react';
 
 const ExerciseForward = ({ route }) => {
 
@@ -21,7 +24,6 @@ const ExerciseForward = ({ route }) => {
     const handleBuy = () => {
         console.log(`Kupujem vježbu ${filteredData.name}`);
     }
-
 
     return (
         <>
@@ -41,8 +43,8 @@ const ExerciseForward = ({ route }) => {
                             <Text style={{marginLeft:10}}>{filteredData.time}</Text>
                         </View>
                         <Text style={{textAlign:"center", fontWeight:"bold", fontSize: 22, marginTop:15, marginBottom:15}}>{filteredData.price}</Text>
-                        <Text style={{textAlign:"center", paddingHorizontal:20}}>{filteredData.description}</Text>            
-                    </View> 
+                        <Text style={{textAlign:"center", paddingHorizontal:20}}>{filteredData.description}</Text>
+                    </View>
                 </View>
                 <Button
                 style={styles.button}
@@ -58,13 +60,13 @@ const styles = StyleSheet.create({
     },
     button: {
         position: 'absolute',
-        bottom: 10, 
-        width: '90%', 
+        bottom: 10,
+        width: '90%',
         height: 55,
         borderRadius: 40,
         alignSelf: 'center',
         backgroundColor: "#8C36C7"
-        
+
     },
     exerciseName: {
         textAlign: 'center',
@@ -75,8 +77,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     timeContainer: {
-        flexDirection: "row", 
-        justifyContent: 'center', 
+        flexDirection: "row",
+        justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10,
     },

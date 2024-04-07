@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image,  } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Arrow from "react-native-vector-icons/AntDesign";
-import Hearto from 'react-native-vector-icons/AntDesign';  
+import Hearto from 'react-native-vector-icons/AntDesign';
 import Clock from 'react-native-vector-icons/AntDesign';
 import axios from "axios";
 import { Button } from '@ui-kitten/components';
@@ -12,7 +12,7 @@ const ChoachForward = ({ route }) => {
     const [finalUserData, setFinalUserData] = useState({});
     const [image, setImage] = useState(null);
     const [coach, setCoach] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); 
+    const [isLoading, setIsLoading] = useState(true);
 
 
     const navigation = useNavigation();
@@ -26,16 +26,16 @@ const ChoachForward = ({ route }) => {
           try {
             const response = await fetch(`http://192.168.0.104:3000/api/username/${trainerName}`);
             const userData = await response.json();
-    
+
             if (userData && userData.length > 0) { // Provjera postojanja i ispravnosti podataka o korisniku
               const image = userData[0].image;
               const finalImage = base64.decode(image);
-    
+
               setImage(finalImage);
               setFinalUserData(userData);
               setIsLoading(false);
             } else {
-                
+
               console.error('Podaci o korisniku nisu definirani ili prazni.');
               setIsLoading(false);
             }
@@ -46,8 +46,8 @@ const ChoachForward = ({ route }) => {
         };
           fetchUserData();
       }, [trainerName]);
-    
-   
+
+
       console.log(finalUserData);
 
     const handleBuy = () => {
@@ -69,24 +69,33 @@ const ChoachForward = ({ route }) => {
                     <View style={{ marginTop: 85 }}>
                         <Image source={{ uri: image }} style={styles.image} />
                         <View style={styles.timeContainer}>
-                            <Clock name="clockcircleo" size={20} color="blue" />
+
                             {
                                 isLoading ? (
                                     <Text>Kurac</Text>
                                 ) : (
                                     <View>
-                                    <Text>{finalUserData[0].username}</Text>
-                                    <Text>{finalUserData[0].password}</Text>
+
+                                    <Text style={styles.trainerName}>{finalUserData[0].username}</Text>
+                                 <Text style={styles.description}>
+
+                                     <Clock  name="clockcircleo" size={25} color="blue"  />
+
+                                     <Text style={{fontWeight: 'bold'}}> {finalUserData[0].duration} minute. </Text></Text>
+                                        <Text style={styles.specialization}>{finalUserData[0].specialization}</Text>
+                                        <Text style={styles.description}>{finalUserData[0].description}</Text>
+
+                                    <View style={{marginTop:150, marginLeft:-100}}>
+                                        <Text style={{marginTop:10, fontWeight:500, fontSize:18}}>{finalUserData[0].username} treiner come with this</Text>
+                                        <Text style={{marginTop:35, fontWeight:400, fontSize:14}}>{finalUserData[0].day}x in week</Text>
+                                    </View>
                                     </View>
                                 )
                             }
                         </View>
-                        <Text style={{textAlign:"center", fontWeight:"bold", fontSize: 22, marginTop:15, marginBottom:15}}>{}</Text>
-                     
-                        <Text style={{textAlign:"center", paddingHorizontal:20}}></Text>            
-                    </View> 
-                 
+                    </View>
                 </View>
+
                 <Button
                 style={styles.button}
                         onPress={() => handleBuy()}><Text>Buy </Text></Button>
@@ -101,40 +110,43 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'yellow',
     },
+
     button: {
         position: 'absolute',
-        bottom: 10, 
-        width: '90%', 
+        bottom: 10,
+        width: '90%',
         height: 55,
         borderRadius: 40,
         alignSelf: 'center',
         backgroundColor: "#8C36C7"
-        
+
     },
-    exerciseName: {
+    trainerName: {
         textAlign: 'center',
-        fontWeight: '400',
-        fontSize: 30,
+        fontWeight: '500',
+        fontSize: 32,
     },
     description: {
-        marginTop: 10,
+        marginTop: 20,
+        textAlign: 'center',
+        fontSize: 16,
+        fontStyle: 'italic',
     },
     timeContainer: {
-        flexDirection: "row", 
-        justifyContent: 'center', 
+        flexDirection: "row",
+        justifyContent: 'center',
         alignItems: 'center',
         marginTop: 10,
     },
     image: {
         position: 'absolute',
-        top: -80,
+        top: -160,
         height: 150,
         width: 280,
         resizeMode: 'cover',
         marginBottom: 50,
-        left: 60,
+        left: 40,
         borderRadius: 35,
-
 
     },
     yellowContainer: {
@@ -151,6 +163,12 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 45, // Zaobljeni gornji lijevi kut
         borderTopRightRadius: 45, // Zaobljeni gornji desni kut
         paddingHorizontal: 20, // Opcionalno, dodavanje unutrašnjeg prostora sa obje strane
+    },
+    specialization: {
+        textAlign: 'center',
+        fontWeight: '500',
+        marginTop:10,
+        fontSize: 20,
     },
 });
 

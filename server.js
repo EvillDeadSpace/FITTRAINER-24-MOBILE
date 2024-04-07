@@ -16,6 +16,9 @@ const userSchema = new Schema({
     role: String,
     price: Number,
     specialization: String,
+    description: String,
+    duration: Number,
+    day:Number,
     favorites: [{ type: mongoose.Schema.ObjectId, ref: 'Item' }] // Referenca na šemu za omiljene stavke
 });
 
@@ -195,24 +198,27 @@ app.get('/api/user/:username', async (req, res) => {
 });
 
 app.post('/api/coaches/price', async (req, res) => {
-    const { username, price, specialization } = req.body;
-  
+    const { username, price, specialization, duration, description, day } = req.body;
+
     try {
       // Pronađi trenera u bazi podataka prema korisničkom imenu
       const coach = await User.findOne({ username: username });
-  
+
       if (!coach) {
         return res.status(404).json({ error: 'Trener nije pronađen.' });
       }
-  
+      coach.day = day;
+      coach.duration= duration;
+      coach.description = description;
+
       coach.specialization = specialization;
 
       // Postavi cijenu treneru
       coach.price = price;
-  
+
       // Spremi promjene u bazu podataka
       await coach.save();
-  
+
       res.status(200).json({ message: 'Cijena uspješno dodana treneru.' });
     } catch (error) {
       console.error('Greška prilikom dodavanja cijene treneru:', error);
