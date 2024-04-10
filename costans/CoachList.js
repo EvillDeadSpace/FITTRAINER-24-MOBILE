@@ -25,16 +25,16 @@ useEffect(() => {
     try {
       const response = await fetch('http://192.168.0.104:3000/api/coaches');
       const data = await response.json();
-   
+
       const dataFinale = data.map (coach=> {
         const image = base64.decode(coach.image);
         console.log(coach);
         return {...coach, image};
-      
+
       })
       setCoaches(dataFinale);
     } catch (error) {
-      
+
     }
   }
   fetchCoach();
@@ -42,7 +42,6 @@ useEffect(() => {
 
 
 const onPressTrainer = (trainerName) => {
-  
   navigation.navigate("ChoachForward", { coaches, trainerName });
 
 };
@@ -76,10 +75,10 @@ const onPressTrainer = (trainerName) => {
       )
     ))
    }
-   
- 
+
+
 </ScrollView>
-   
+
     </View>
   );
 }
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     alignItems: "center", // Changed alignment to start from left
-    flexDirection: "row", 
+    flexDirection: "row",
     flexWrap: "wrap",// Changed flexDirection to column
   },
   row: {
