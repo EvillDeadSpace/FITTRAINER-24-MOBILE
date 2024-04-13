@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, ScrollView, TouchableOpacity, Image, StyleSheet} from "react-native";
 import split from "../costans/Split";
 import Icon from 'react-native-vector-icons/AntDesign';
 import Arrow from 'react-native-vector-icons/Entypo';
 import ExercisesList from './ExercisesList';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../components/Contex';
+
 const ExercisesWeek = () => {
+
+    const { username} = useContext(UserContext);
 
 
     const navigation = useNavigation();
@@ -15,19 +19,105 @@ const ExercisesWeek = () => {
     };
 
     const handleExercisePress = (exerciseName) => {
-        console.log('Tražim vježbu:', exerciseName);  
+        console.log('Tražim vježbu:', exerciseName);
         navigation.navigate('ExerciseForward', {exerciseName});
       };
-     
+
 
     const [heartVisibleMap, setHeartVisibleMap] = useState({}); // Stanje za praćenje vidljivosti srca
 
-    // Funkcija koja mijenja stanje srca za određenu karticu
-    const toggleHeart = (index) => {
-        setHeartVisibleMap(prevState => ({
-            ...prevState,
-            [index]: !prevState[index]
-        }));
+
+
+
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                const response = await fetch(`http://192.168.0.104:3000/api/user/favorites/${username}`);
+                const data = await response.json();
+                console.log(data);
+
+               
+                if (data.favorites && data.favorites.length > 0) {
+                    const newHeartVisibleMap = {};
+                    data.favorites.forEach((item, index) => {
+                        newHeartVisibleMap[item] = true; 
+                    });
+                    setHeartVisibleMap(newHeartVisibleMap);
+                }
+            } catch (error) {
+                console.error('Došlo je do greške prilikom dohvatanja omiljenih stavki:', error);
+            }
+        };
+
+        fetchFavorites();
+    }, [username]);
+    const removeFavorite = async (itemId) => {
+        try {
+            const response = await fetch(`http://192.168.0.104:3000/api/user/removefavorite/${username}/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    itemId: itemId,
+                }),
+            });
+
+            const data = await response.json();
+            console.log(data); 
+           
+            if (data.success) {
+                setHeartVisibleMap(prevState => ({
+                    ...prevState,
+                    [itemId]: false, 
+                }));
+            }
+        } catch (error) {
+            console.error('Došlo je do greške prilikom uklanjanja stavke kao omiljene:', error);
+        }
+    };
+
+    const markAsFavorite = async (itemId) => {
+        try {
+            const response = await fetch(`http://192.168.0.104:3000/api/user/addfavorite/${username}/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    itemId: itemId,
+                }),
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.success) {
+                setHeartVisibleMap(prevState => ({
+                    ...prevState,
+                    [itemId]: true, // Ovdje mijenjamo na true jer je stavka označena kao omiljena
+                }));
+            }
+        } catch (error) {
+            console.error('Došlo je do greške prilikom označavanja stavke kao omiljene:', error);
+        }
+    };
+
+    const toggleFavorite = async (itemId) => {
+        try {
+            // Provjeri trenutno stanje srca za ovaj item
+            const isFavorite = heartVisibleMap[itemId];
+
+            if (isFavorite) {
+                await removeFavorite(itemId); // Ako je označeno kao omiljeno, ukloni iz omiljenih
+            } else {
+                await markAsFavorite(itemId); // Inače označi kao omiljeno
+            }
+        } catch (error) {
+            console.error('Došlo je do greške prilikom ažuriranja omiljenih stavki:', error);
+        }
     };
 
     return (
@@ -39,11 +129,11 @@ const ExercisesWeek = () => {
                     </TouchableOpacity>
                 </View>
             <ScrollView horizontal={true} style={styles.container}>
-                {split.slice(0,3).map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => handleExercisePress(item.name)}>
+                {split.slice(0,5).map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => toggleFavorite(index)}>
                         <View style={styles.card}>
                             <Image source={item.photo} style={styles.image} />
-                            <TouchableOpacity style={styles.heartIcon} onPress={() => toggleHeart(index)}>
+                            <TouchableOpacity style={styles.heartIcon} onPress={() => toggleFavorite(index)}>
                                 {/* Prikazuje srce ili srce u punom obliku na osnovu stanja */}
                                 {heartVisibleMap[index] ? (
                                     <Icon name="heart" size={24} color="red" />

@@ -23,10 +23,12 @@ const Orders = () => {
                 <TouchableOpacity onPress={() => handlerButton('trainer')}
                 >
                     <Image source={trainerPhoto} style={{ width: '100%', height: 250, borderRadius: 25 }} />
+                    <Text style={{textAlign:"center"}}>Buy TRAINER</Text>
                 </TouchableOpacity >
 
                 <TouchableOpacity onPress={() => handlerButton("Amar")}>
                     <Image source={coachPhoto} style={{ width: '100%', height: 250, borderRadius: 25, marginTop: 20 }} />
+                    <Text style={{textAlign:"center"}}>Buy PLAN and PROGRAM</Text>
                 </TouchableOpacity>
             </View>
 

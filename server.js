@@ -19,7 +19,7 @@ const userSchema = new Schema({
     description: String,
     duration: Number,
     day:Number,
-    favorites: [{ type: mongoose.Schema.ObjectId, ref: 'Item' }] // Referenca na šemu za omiljene stavke
+    favorites: [String] // Referenca na šemu za omiljene stavke
 });
 
 // Kreiranje modela korisnika
@@ -150,33 +150,84 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-app.post('/api/user/addfavorite/:userId/:itemId', async (req, res) => {
+app.post('/api/user/addfavorite/:username/:itemId', async (req, res) => {
     try {
-        const { userId, itemId } = req.params;
+        const { username } = req.params;
+        const { itemId } = req.body;
+        console.log('Pristiglo korisničko ime:', username);
 
-        // Pronađi korisnika u bazi podataka
-        const user = await User.findById(userId);
+        // Pronađi korisnika u bazi podataka po korisničkom imenu
+        const user = await User.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
         }
 
-        // Provjeri da li je stavka već označena kao omiljena
-        if (user.favorites.includes(itemId)) {
-            return res.status(400).json({ success: false, message: 'Stavka je već dodana u omiljene.' });
+        // Provjeri postoji li svojstvo favorites na korisniku
+        if (!user.favorites) {
+            user.favorites = []; // Ako ne postoji, inicijaliziraj ga kao prazan niz
         }
 
         // Dodaj stavku u omiljene stavke korisnika
         user.favorites.push(itemId);
+
         await user.save();
 
-        // Vrati uspješan odgovor
         return res.json({ success: true, message: 'Stavka dodana u omiljene.' });
     } catch (error) {
         console.error('Došlo je do greške prilikom dodavanja stavke u omiljene:', error);
         res.status(500).json({ success: false, message: 'Došlo je do greške prilikom dodavanja stavke u omiljene.' });
     }
 });
+
+app.get('/api/user/favorites/:username', async (req, res) => {
+    try {
+        const { username } = req.params;
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
+        }
+
+        // Vrati omiljene stavke korisnika
+        res.json({ success: true, favorites: user.favorites });
+    } catch (error) {
+        console.error('Došlo je do greške prilikom dohvatanja omiljenih stavki:', error);
+        res.status(500).json({ success: false, message: 'Došlo je do greške prilikom dohvatanja omiljenih stavki.' });
+    }
+});
+
+app.post('/api/user/removefavorite/:username/:itemId', async (req, res) => {
+    try {
+        const { username, itemId } = req.params;
+
+        // Pronađi korisnika u bazi podataka
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Korisnik nije pronađen.' });
+        }
+
+        // Provjeri da li je stavka označena kao omiljena
+        const itemIndex = user.favorites.indexOf(itemId);
+        if (itemIndex === -1) {
+            return res.status(400).json({ success: false, message: 'Stavka nije označena kao omiljena.' });
+        }
+
+        // Ukloni stavku iz omiljenih
+        user.favorites.splice(itemIndex, 1);
+        await user.save();
+
+        // Vrati uspješan odgovor
+        return res.json({ success: true, message: 'Stavka uklonjena iz omiljenih.' });
+    } catch (error) {
+        console.error('Došlo je do greške prilikom uklanjanja stavke iz omiljenih:', error);
+        res.status(500).json({ success: false, message: 'Došlo je do greške prilikom uklanjanja stavke iz omiljenih.' });
+    }
+});
+
+
+
 
 app.get('/api/user/:username', async (req, res) => {
 
