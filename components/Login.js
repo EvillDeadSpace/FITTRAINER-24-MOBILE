@@ -44,7 +44,7 @@ const Login = () => {
             if (result.success) {
                 setUsername(result.user.username);
 
-                console.log(picture);
+                console.log(picture + "test test 321");
 
                 const user =result.user.username;
 
